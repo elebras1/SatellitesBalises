@@ -10,7 +10,7 @@ public class HorizontalMovement implements MovementStrategy {
     private int xMax;
     private int speed;
 
-    public HorizontalMovement(int xMax, int speed, int mobileWidth) {
+    public HorizontalMovement(int xMax, int speed) {
         this.xMax = xMax;
         this.speed = speed;
     }
