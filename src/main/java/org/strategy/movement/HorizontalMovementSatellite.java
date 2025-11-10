@@ -6,12 +6,12 @@ import org.strategy.MovementStrategy;
 
 import java.awt.*;
 
-public class HorizontalMovement implements MovementStrategy {
+public class HorizontalMovementSatellite implements MovementStrategy {
 
     private final SimulationContext simulationContext;
-    private int speed;
+    private final int speed;
 
-    public HorizontalMovement(SimulationContext simulationContext, int speed) {
+    public HorizontalMovementSatellite(SimulationContext simulationContext, int speed) {
         this.simulationContext = simulationContext;
         this.speed = speed;
     }
@@ -19,9 +19,6 @@ public class HorizontalMovement implements MovementStrategy {
     @Override
     public void move(Mobile mobile) {
         Point point = mobile.getPoint();
-        if (point.x + speed + mobile.getMobileWidth() >= simulationContext.getWidth() || point.x + speed <= 0) {
-            speed = speed * -1;
-        }
-        mobile.setPoint(new Point((point.x+speed), point.y));
+        mobile.setPoint(new Point((point.x+speed % simulationContext.getWidth()), point.y));
     }
 }
