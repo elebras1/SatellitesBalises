@@ -20,8 +20,8 @@ public class toSurfaceMovement implements MovementStrategy {
     public void move(Mobile mobile) {
         Point point = mobile.getPoint();
         if (point.y + speed <= yMin) {
-            speed = 0;
+            speed = yMin;
         }
-        mobile.setPoint(new Point((point.y+speed), point.y));
+        mobile.setPoint(new Point(point.x, (point.y+speed)));
     }
 }

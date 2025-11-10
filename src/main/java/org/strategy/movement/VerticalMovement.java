@@ -24,6 +24,6 @@ public class VerticalMovement implements MovementStrategy {
         if (point.y + speed + mobile.getMobileWidth() >= yMax || point.y + speed <= yMin) {
             speed = speed * -1;
         }
-        mobile.setPoint(new Point((point.y+speed), point.y));
+        mobile.setPoint(new Point(point.x, (point.y+speed)));
     }
 }
