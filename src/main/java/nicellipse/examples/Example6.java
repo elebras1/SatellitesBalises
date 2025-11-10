@@ -1,4 +1,4 @@
-package org.nicellipse.examples;
+package nicellipse.examples;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,9 +11,9 @@ import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.Timer;
 
-import org.nicellipse.component.NiLabel;
-import org.nicellipse.component.NiRectangle;
-import org.nicellipse.component.NiSpace;
+import nicellipse.component.NiLabel;
+import nicellipse.component.NiRectangle;
+import nicellipse.component.NiSpace;
 
 public class Example6 {
 

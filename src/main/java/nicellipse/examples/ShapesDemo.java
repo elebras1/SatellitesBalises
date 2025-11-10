@@ -1,11 +1,11 @@
-package org.nicellipse.examples;
+package nicellipse.examples;
 
 /* 
  * Swing version.
  */
 
 import javax.swing.*;
-import org.nicellipse.component.NiSpace;
+import nicellipse.component.NiSpace;
 import java.awt.*;
 import java.io.IOException;
 

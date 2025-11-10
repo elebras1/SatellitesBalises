@@ -1,4 +1,4 @@
-package org.nicellipse.examples;
+package nicellipse.examples;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,8 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.nicellipse.component.NiLabel;
-import org.nicellipse.component.NiSpace;
+import nicellipse.component.NiLabel;
+import nicellipse.component.NiSpace;
 
 public class Example0 {
 	public static void main(String[] args) {

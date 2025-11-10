@@ -1,4 +1,4 @@
-package org.nicellipse.component;
+package nicellipse.component;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

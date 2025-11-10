@@ -1,4 +1,4 @@
-package org.nicellipse.component;
+package nicellipse.component;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;

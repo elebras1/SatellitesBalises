@@ -1,13 +1,13 @@
-package org.nicellipse.examples;
+package nicellipse.examples;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 
-import org.nicellipse.component.NiEllipse;
-import org.nicellipse.component.NiImage;
-import org.nicellipse.component.NiSpace;
+import nicellipse.component.NiEllipse;
+import nicellipse.component.NiImage;
+import nicellipse.component.NiSpace;
 
 public class Example1 {
 	public static void main(String[] args) throws IOException {

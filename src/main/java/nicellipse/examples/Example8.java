@@ -1,4 +1,4 @@
-package org.nicellipse.examples;
+package nicellipse.examples;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -14,9 +14,9 @@ import java.io.IOException;
 
 import javax.swing.Timer;
 
-import org.nicellipse.component.NiRectangle;
-import org.nicellipse.component.NiShape;
-import org.nicellipse.component.NiSpace;
+import nicellipse.component.NiRectangle;
+import nicellipse.component.NiShape;
+import nicellipse.component.NiSpace;
 
 public class Example8 {
 	public static void main(String[] args) throws IOException {

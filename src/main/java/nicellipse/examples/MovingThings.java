@@ -1,4 +1,4 @@
-package org.nicellipse.examples;
+package nicellipse.examples;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,9 +17,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import java.awt.Component;
-import org.nicellipse.component.NiEllipse;
-import org.nicellipse.component.NiRectangle;
-import org.nicellipse.component.NiSpace;
+import nicellipse.component.NiEllipse;
+import nicellipse.component.NiRectangle;
+import nicellipse.component.NiSpace;
 
 
 // Model 

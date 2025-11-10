@@ -1,4 +1,4 @@
-package org.nicellipse.examples;
+package nicellipse.examples;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -7,8 +7,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.SwingUtilities;
 
-import org.nicellipse.component.NiRectangle;
-import org.nicellipse.component.NiSpace;
+import nicellipse.component.NiRectangle;
+import nicellipse.component.NiSpace;
 
 public class Exercice1V1 {
 	NiSpace space = new NiSpace("Exercice 1", new Dimension(200, 150));

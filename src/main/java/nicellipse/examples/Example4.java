@@ -1,4 +1,4 @@
-package org.nicellipse.examples;
+package nicellipse.examples;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -7,11 +7,11 @@ import java.awt.Point;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Line2D;
 
-import org.nicellipse.component.NiEllipse;
-import org.nicellipse.component.NiPolyLine;
-import org.nicellipse.component.NiRectangle;
-import org.nicellipse.component.NiShape;
-import org.nicellipse.component.NiSpace;
+import nicellipse.component.NiEllipse;
+import nicellipse.component.NiPolyLine;
+import nicellipse.component.NiRectangle;
+import nicellipse.component.NiShape;
+import nicellipse.component.NiSpace;
 
 public class Example4 {
 	public static void main(String[] args) {

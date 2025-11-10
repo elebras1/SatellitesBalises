@@ -1,4 +1,4 @@
-package org.nicellipse.examples;
+package nicellipse.examples;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,8 +9,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 
-import org.nicellipse.component.NiImage;
-import org.nicellipse.component.NiSpace;
+import nicellipse.component.NiImage;
+import nicellipse.component.NiSpace;
 
 public class Example3 {
 	public static void main(String[] args) {
