@@ -5,12 +5,12 @@ import org.strategy.MovementStrategy;
 
 import java.awt.*;
 
-public class diveMovement implements MovementStrategy {
+public class DiveMovement implements MovementStrategy {
     private final int yMax;
     private int speed;
 
 
-    public diveMovement(int yMax, int speed ) {
+    public DiveMovement(int yMax, int speed ) {
         this.yMax = yMax;
         this.speed = speed;
     }
@@ -20,7 +20,7 @@ public class diveMovement implements MovementStrategy {
     public void move(Mobile mobile) {
         Point point = mobile.getPoint();
         if (point.y + speed + mobile.getMobileWidth() >= yMax ) {
-            speed = yMax;
+            speed = 0;
         }
         mobile.setPoint(new Point(point.x, (point.y+speed)));
     }
