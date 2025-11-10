@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8134ed0-04a9-4232-964d-2cde94d08127" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/strategy/movement/VerticalMovement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/strategy/movement/diveMovement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/strategy/movement/toSurfaceMovement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/strategy/movement/VerticalMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/strategy/movement/VerticalMovement.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,11 +39,16 @@
       </list>
     </option>
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "git-widget-placeholder": "main"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.strategy.movement" />
+    </key>
+  </component>
   <component name="TaskManager">
     <servers />
   </component>

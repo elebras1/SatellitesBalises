@@ -5,15 +5,13 @@ import org.strategy.MovementStrategy;
 
 import java.awt.*;
 
-public class VerticalMovement implements MovementStrategy {
+public class diveMovement implements MovementStrategy {
     private final int yMax;
-    private final int yMin;
     private int speed;
 
 
-    public VerticalMovement(int yMax, int yMin, int speed ) {
+    public diveMovement(int yMax, int speed ) {
         this.yMax = yMax;
-        this.yMin = yMin;
         this.speed = speed;
     }
 
@@ -21,8 +19,8 @@ public class VerticalMovement implements MovementStrategy {
     @Override
     public void move(Mobile mobile) {
         Point point = mobile.getPoint();
-        if (point.y + speed + mobile.getMobileWidth() >= yMax || point.y + speed <= yMin) {
-            speed = speed * -1;
+        if (point.y + speed + mobile.getMobileWidth() >= yMax ) {
+            speed = 0;
         }
         mobile.setPoint(new Point((point.y+speed), point.y));
     }
