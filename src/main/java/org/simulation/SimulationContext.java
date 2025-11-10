@@ -1,9 +1,9 @@
 package org.simulation;
 
 public class SimulationContext {
-    private int width;
-    private int height;
-    private int seaLevel;
+    private final int width;
+    private final int height;
+    private final int seaLevel;
 
     public SimulationContext(int width, int height, int seaLevel) {
         this.width = width;

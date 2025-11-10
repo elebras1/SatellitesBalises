@@ -6,9 +6,11 @@ import java.awt.*;
 
 public class Buoy implements Mobile {
     private final EventHandler eventHandler;
+    private final int width;
 
-    public Buoy() {
+    public Buoy(int width) {
         this.eventHandler = new EventHandler();
+        this.width = width;
     }
 
     @Override
@@ -29,5 +31,10 @@ public class Buoy implements Mobile {
     @Override
     public void setPoint(Point point) {
 
+    }
+
+    @Override
+    public int getMobileWidth() {
+        return this.width;
     }
 }

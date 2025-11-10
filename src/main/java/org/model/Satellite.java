@@ -6,9 +6,12 @@ import java.awt.*;
 
 public class Satellite implements Mobile {
     private final EventHandler eventHandler;
+    private final int width;
 
-    public Satellite() {
+
+    public Satellite(int width) {
         this.eventHandler = new EventHandler();
+        this.width = width;
     }
 
     @Override
@@ -29,5 +32,10 @@ public class Satellite implements Mobile {
     @Override
     public void setPoint(Point point) {
 
+    }
+
+    @Override
+    public int getMobileWidth() {
+        return this.width;
     }
 }
