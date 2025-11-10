@@ -8,21 +8,22 @@ import java.awt.*;
 public class HorizontalMovement implements MovementStrategy {
 
     private int xMax;
-    private int vitesse;
-    private int largeurMobile;
+    private int speed;
+    private int mobileWidth;
 
-    public HorizontalMovement(int xMax, int vitesse, int largeurMobile) {
+    public HorizontalMovement(int xMax, int speed, int mobileWidth) {
         this.xMax = xMax;
-        this.vitesse = vitesse;
-        this.largeurMobile = largeurMobile;
+        this.speed = speed;
+        this.mobileWidth = mobileWidth;
     }
+
 
     @Override
     public void move(Mobile mobile) {
         Point point = mobile.getPoint();
-        mobile.setPoint(new Point((point.x+vitesse), point.y));
-        if (point.x+ vitesse >= xMax || point.x + vitesse <= 0) {
-            vitesse = vitesse * -1;
+        if (point.x + speed + mobileWidth >= xMax || point.x + speed <= 0) {
+            speed = speed * -1;
         }
+        mobile.setPoint(new Point((point.x+speed), point.y));
     }
 }

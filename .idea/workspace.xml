@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="805db7e1-5278-4a20-9a61-d84525896a2e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/strategy/movement/HorizontalMovement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/model/MovementStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/strategy/MovementStrategy.java" afterDir="false" />
-    </list>
+    <list default="true" id="805db7e1-5278-4a20-9a61-d84525896a2e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,6 +70,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
@@ -95,7 +93,7 @@
       <option name="presentableId" value="Default" />
       <updated>1762760871638</updated>
       <workItem from="1762760873961" duration="2708000" />
-      <workItem from="1762777009257" duration="2127000" />
+      <workItem from="1762777009257" duration="2889000" />
     </task>
     <servers />
   </component>
