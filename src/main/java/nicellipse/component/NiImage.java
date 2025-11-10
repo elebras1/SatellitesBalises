@@ -22,6 +22,7 @@ public class NiImage extends JComponent implements NiBasicComponent {
 	
 	public NiImage(File path) throws IOException {
 		BufferedImage rawImage = null;
+		System.out.println("Chemin absolu : " + path.getAbsolutePath());
 		rawImage = ImageIO.read(path);
 		this.setImage(rawImage);
 	}
