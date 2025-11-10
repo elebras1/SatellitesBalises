@@ -1,27 +1,88 @@
 package org.simulation;
 
+import nicellipse.component.NiRectangle;
 import nicellipse.component.NiSpace;
+import org.event.MovementEvent;
+import org.event.SyncEvent;
+import org.event.WaitingEvent;
+import org.eventHandler.EventHandler;
 import org.model.Buoy;
 import org.model.Mobile;
+import org.model.Satellite;
+import org.view.BuoyView;
+import org.view.SatelliteView;
 
 import java.awt.*;
+import java.io.File;
 
 public class Simulation {
     private final SimulationContext context;
     private final NiSpace space;
+    private final EventHandler eventHandler;
 
     public Simulation(SimulationContext context) {
         this.context = context;
         this.space = new NiSpace("Simulation Space", new Dimension(context.getWidth(), context.getHeight()));
+        this.eventHandler = new EventHandler();
         this.initialize();
     }
 
-    public void initialize() {
-        Mobile buoy1 = new Buoy()
+    private void initialize() {
+        try {
+            Buoy buoy1 = new Buoy(64);
+            Buoy buoy2 = new Buoy(64);
+            Buoy buoy3 = new Buoy(64);
+            Satellite satellite = new Satellite(64);
+            this.registerSatellite(satellite, buoy1, buoy2, buoy2);
+            this.registers(buoy1, buoy2, buoy3, satellite);
+
+            BuoyView buoyView1 = new BuoyView(new File("src/main/resources/submarine.png"));
+            buoyView1.setLocation(this.context.getWidth() / 2, this.context.getHeight() - 150);
+            this.space.add(buoyView1);
+            buoy1.getEventHandler().registerListener(MovementEvent.class,buoyView1);
+
+            BuoyView buoyView2 = new BuoyView(new File("src/main/resources/submarine.png"));
+            buoyView2.setLocation(this.context.getWidth() / 2 - 100, this.context.getHeight() - 200);
+            this.space.add(buoyView2);
+            buoy2.getEventHandler().registerListener(MovementEvent.class,buoyView2);
+
+            BuoyView buoyView3 = new BuoyView(new File("src/main/resources/submarine.png"));
+            buoyView3.setLocation(this.context.getWidth() / 2 + 100, this.context.getHeight() - 250);
+            this.space.add(buoyView3);
+            buoy3.getEventHandler().registerListener(MovementEvent.class,buoyView3);
+
+            SatelliteView satelliteView1 = new SatelliteView(new File("src/main/resources/satellite.png"));
+            satelliteView1.setLocation(this.context.getWidth() / 2, 150);
+            this.space.add(satelliteView1);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    private void registerSatellite(Satellite satellite, Buoy... buoys) {
+        for(Buoy buoy : buoys) {
+            buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
+            buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
+        }
+    }
+
+
+    private void registers(Mobile... mobiles) {
+        for(Mobile mobile : mobiles) {
+            this.eventHandler.registerListener(MovementEvent.class, mobile);
+        }
+    }
+
+    private void addSea() {
+        NiRectangle sea = new NiRectangle();
+        sea.setDimension(new Dimension(this.context.getWidth(), this.context.getHeight() - this.context.getSeaLevel()));
+        sea.setBackground(Color.BLUE);
+        sea.setLocation(0, this.context.getSeaLevel());
+        this.space.add(sea);
     }
 
     public void process() {
-
+        this.space.openInWindow();
     }
 
 }
