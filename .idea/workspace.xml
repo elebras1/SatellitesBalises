@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="805db7e1-5278-4a20-9a61-d84525896a2e" name="Changes" comment="" />
+=======
+    <list default="true" id="805db7e1-5278-4a20-9a61-d84525896a2e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/model/Buoy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/model/Buoy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/model/Mobile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/model/Mobile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/model/Satellite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/model/Satellite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/simulation/Simulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/simulation/Simulation.java" afterDir="false" />
+    </list>
+>>>>>>> 01dd43b0b335c3b8a80859465babe900d045ef3a
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,6 +61,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Gradle.SatellitesBalises [:org.Main.main()].executor": "Run",
@@ -75,8 +86,31 @@
     "project.structure.side.proportion": "0.0",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.SatellitesBalises [:org.Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sully/Documents/licence_info/Master_2/principe_analyse_conception_objet/projet_satelite/SatellitesBalises&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+>>>>>>> 01dd43b0b335c3b8a80859465babe900d045ef3a
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
