@@ -2,10 +2,10 @@ package org.model;
 
 import org.eventHandler.EventHandler;
 
-public class Balise implements Mobile {
+public class Satellite implements Mobile {
     private final EventHandler eventHandler;
 
-    public Balise() {
+    public Satellite() {
         this.eventHandler = new EventHandler();
     }
 
