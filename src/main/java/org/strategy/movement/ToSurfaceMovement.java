@@ -1,17 +1,18 @@
 package org.strategy.movement;
 
 import org.model.Mobile;
+import org.simulation.SimulationContext;
 import org.strategy.MovementStrategy;
 
 import java.awt.*;
 
 public class ToSurfaceMovement implements MovementStrategy {
-    private final int yMin;
+    private final SimulationContext simulationContext;
     private int speed;
 
 
-    public ToSurfaceMovement( int yMin, int speed ) {
-        this.yMin = yMin;
+    public ToSurfaceMovement(SimulationContext simulationContext, int speed) {
+        this.simulationContext = simulationContext;
         this.speed = speed;
     }
 
@@ -19,9 +20,9 @@ public class ToSurfaceMovement implements MovementStrategy {
     @Override
     public void move(Mobile mobile) {
         Point point = mobile.getPoint();
-        if (point.y + speed <= yMin) {
-            speed = 0;
+        if (point.y - this.speed <= this.simulationContext.getSeaLevel()) {
+            this.speed = 0;
         }
-        mobile.setPoint(new Point(point.x, (point.y+speed)));
+        point.y -= this.speed;
     }
 }

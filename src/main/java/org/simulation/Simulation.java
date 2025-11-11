@@ -2,6 +2,7 @@ package org.simulation;
 
 import nicellipse.component.NiRectangle;
 import nicellipse.component.NiSpace;
+import org.event.DataCollectionCompleteEvent;
 import org.event.MovementEvent;
 import org.event.SyncEvent;
 import org.event.WaitingEvent;
@@ -12,6 +13,7 @@ import org.model.Satellite;
 import org.strategy.movement.HorizontalMovement;
 import org.strategy.movement.HorizontalMovementSatellite;
 import org.strategy.movement.SinusMovement;
+import org.strategy.movement.ToSurfaceMovement;
 import org.view.BuoyView;
 import org.view.SatelliteView;
 
@@ -32,9 +34,9 @@ public class Simulation {
 
     private void initialize() {
         try {
-            Buoy buoy1 = new Buoy(64);
-            Buoy buoy2 = new Buoy(64);
-            Buoy buoy3 = new Buoy(64);
+            Buoy buoy1 = new Buoy(64, 800);
+            Buoy buoy2 = new Buoy(64, 4000);
+            Buoy buoy3 = new Buoy(64, 2000);
             Satellite satellite = new Satellite(64);
 
             this.registerSatellite(satellite, buoy1, buoy2, buoy2);
@@ -89,6 +91,7 @@ public class Simulation {
     private void registers(Mobile... mobiles) {
         for(Mobile mobile : mobiles) {
             this.eventHandler.registerListener(MovementEvent.class, mobile);
+            mobile.getEventHandler().registerListener(DataCollectionCompleteEvent.class, this);
         }
     }
 
@@ -111,6 +114,10 @@ public class Simulation {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void onDataCollectionComplete(Mobile mobile) {
+        mobile.setMovementStrategy(new ToSurfaceMovement(this.context, 1));
     }
 
 }
