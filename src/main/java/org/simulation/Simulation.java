@@ -67,13 +67,14 @@ public class Simulation {
             SatelliteView satelliteView1 = new SatelliteView(new File("src/main/resources/satellite.png"));
             // set the location of the satellite view to the point of the satellite
             satelliteView1.setLocation(satellite.getPoint());
+            this.space.add(satelliteView1);
             satellite.getEventHandler().registerListener(MovementEvent.class, satelliteView1);
             satellite.setMovementStrategy(new HorizontalMovementSatellite(this.context, 1));
 
-            this.space.add(satelliteView1);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+        this.addSea();
     }
 
     private void registerSatellite(Satellite satellite, Buoy... buoys) {
