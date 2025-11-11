@@ -19,6 +19,6 @@ public class HorizontalMovementSatellite implements MovementStrategy {
     @Override
     public void move(Mobile mobile) {
         Point point = mobile.getPoint();
-        mobile.setPoint(new Point((point.x+speed % simulationContext.getWidth()), point.y));
+        mobile.setPoint(new Point(((point.x+speed) % simulationContext.getWidth()), point.y));
     }
 }
