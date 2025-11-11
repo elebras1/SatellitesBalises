@@ -9,27 +9,34 @@ import java.awt.*;
 public class SinusMovement implements MovementStrategy {
 
     private final SimulationContext simulationContext;
-    private int speed;
+    private double speed;
     private double phase = 0;
+    private final double amplitude = 40;
+    private final double frequency = 0.02;
+    private int initialY;
 
-    public SinusMovement(SimulationContext simulationContext, int speed) {
+    public SinusMovement(SimulationContext simulationContext, double speed) {
         this.simulationContext = simulationContext;
         this.speed = speed;
+        this.initialY = 0;
     }
 
     @Override
     public void move(Mobile mobile) {
         Point point = mobile.getPoint();
 
-        int newX = point.x + speed;
+        if (initialY == 0) {
+            initialY = point.y;
+        }
 
-        phase += 0.01;
-        int baseY = point.y;
-        int newY = (int) (baseY + Math.sin(phase) * 20);
+        phase += frequency;
+        double newX = point.x + speed;
+        double newY = initialY + Math.sin(phase) * amplitude;
 
-        if (newX >= simulationContext.getWidth() || newX <= 0) {
+        if (newX + mobile.getMobileWidth() >= simulationContext.getWidth() || newX <= 0) {
             speed *= -1;
         }
-        mobile.setPoint(new Point(newX, newY));
+
+        mobile.setPoint(new Point((int) newX, (int) newY));
     }
 }

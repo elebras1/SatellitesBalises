@@ -11,6 +11,7 @@ import org.model.Mobile;
 import org.model.Satellite;
 import org.strategy.movement.HorizontalMovement;
 import org.strategy.movement.HorizontalMovementSatellite;
+import org.strategy.movement.SinusMovement;
 import org.view.BuoyView;
 import org.view.SatelliteView;
 
@@ -60,7 +61,7 @@ public class Simulation {
             buoyView3.setLocation(buoy3.getPoint());
             this.space.add(buoyView3);
             buoy3.getEventHandler().registerListener(MovementEvent.class,buoyView3);
-            buoy3.setMovementStrategy(new HorizontalMovement(this.context, 1));
+            buoy3.setMovementStrategy(new SinusMovement(this.context, 1));
 
             // set the point of the satellite
             satellite.setPoint(new Point(this.context.getWidth() / 2, 150));
@@ -104,7 +105,7 @@ public class Simulation {
 
         while (true) {
             try {
-                Thread.sleep(5);
+                Thread.sleep(10);
                 this.eventHandler.send(new MovementEvent(this));
             } catch (InterruptedException e) {
                 e.printStackTrace();
