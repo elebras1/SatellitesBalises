@@ -9,13 +9,13 @@ import java.awt.*;
 public class SinusMovement implements MovementStrategy {
 
     private final SimulationContext simulationContext;
-    private double speed;
+    private int speed;
     private double phase = 0;
     private final double amplitude = 40;
     private final double frequency = 0.02;
     private int initialY;
 
-    public SinusMovement(SimulationContext simulationContext, double speed) {
+    public SinusMovement(SimulationContext simulationContext, int speed) {
         this.simulationContext = simulationContext;
         this.speed = speed;
         this.initialY = 0;
