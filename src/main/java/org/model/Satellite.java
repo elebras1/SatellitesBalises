@@ -1,6 +1,7 @@
 package org.model;
 
 import org.event.MovementEvent;
+import org.event.PositionChangedEvent;
 import org.eventHandler.EventHandler;
 import org.strategy.MovementStrategy;
 
@@ -26,7 +27,7 @@ public class Satellite implements Mobile {
     @Override
     public void move() {
         this.movementStrategy.move(this);
-        this.eventHandler.send(new MovementEvent(this));
+        this.eventHandler.send(new PositionChangedEvent(this));
     }
 
     @Override

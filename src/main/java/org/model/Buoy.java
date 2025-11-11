@@ -2,6 +2,7 @@ package org.model;
 
 import org.event.DataCollectionCompleteEvent;
 import org.event.MovementEvent;
+import org.event.PositionChangedEvent;
 import org.eventHandler.EventHandler;
 import org.strategy.MovementStrategy;
 
@@ -34,7 +35,7 @@ public class Buoy implements Mobile {
     public void move() {
         this.collectData();
         this.movementStrategy.move(this);
-        this.eventHandler.send(new MovementEvent(this));
+        this.eventHandler.send(new PositionChangedEvent(this));
     }
 
     @Override

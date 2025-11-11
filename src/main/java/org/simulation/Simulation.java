@@ -2,10 +2,7 @@ package org.simulation;
 
 import nicellipse.component.NiRectangle;
 import nicellipse.component.NiSpace;
-import org.event.DataCollectionCompleteEvent;
-import org.event.MovementEvent;
-import org.event.SyncEvent;
-import org.event.WaitingEvent;
+import org.event.*;
 import org.eventHandler.EventHandler;
 import org.model.Buoy;
 import org.model.Mobile;
@@ -48,21 +45,21 @@ public class Simulation {
             // set the location of the buoy view to the point of the buoy
             buoyView1.setLocation(buoy1.getPoint());
             this.space.add(buoyView1);
-            buoy1.getEventHandler().registerListener(MovementEvent.class,buoyView1);
+            buoy1.getEventHandler().registerListener(PositionChangedEvent.class,buoyView1);
             buoy1.setMovementStrategy(new HorizontalMovement(this.context, 1));
 
             buoy2.setPoint(new Point(this.context.getWidth() / 2 - 100, this.context.getHeight() - 200));
             BuoyView buoyView2 = new BuoyView(new File("src/main/resources/submarine.png"));
             buoyView2.setLocation(buoy2.getPoint());
             this.space.add(buoyView2);
-            buoy2.getEventHandler().registerListener(MovementEvent.class,buoyView2);
+            buoy2.getEventHandler().registerListener(PositionChangedEvent.class,buoyView2);
             buoy2.setMovementStrategy(new HorizontalMovement(this.context, 2));
 
             buoy3.setPoint(new Point(this.context.getWidth() / 2 + 100, this.context.getHeight() - 250));
             BuoyView buoyView3 = new BuoyView(new File("src/main/resources/submarine.png"));
             buoyView3.setLocation(buoy3.getPoint());
             this.space.add(buoyView3);
-            buoy3.getEventHandler().registerListener(MovementEvent.class,buoyView3);
+            buoy3.getEventHandler().registerListener(PositionChangedEvent.class,buoyView3);
             buoy3.setMovementStrategy(new SinusMovement(this.context, 1));
 
             // set the point of the satellite
@@ -71,7 +68,7 @@ public class Simulation {
             // set the location of the satellite view to the point of the satellite
             satelliteView1.setLocation(satellite.getPoint());
             this.space.add(satelliteView1);
-            satellite.getEventHandler().registerListener(MovementEvent.class, satelliteView1);
+            satellite.getEventHandler().registerListener(PositionChangedEvent.class, satelliteView1);
             satellite.setMovementStrategy(new HorizontalMovementSatellite(this.context, 1));
 
         } catch (Exception exception) {
