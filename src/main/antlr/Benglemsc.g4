@@ -6,13 +6,27 @@ grammar Benglemsc;
 
 program : statement+ ;
 
-statement : 'print' expr ';'  #print
-    | 'let' ID '=' expr ';' #assignment
+statement
+    : varAssignment ';'             #varAssignmentStmt
+    | methodCall ';'                #methodCallStmt
     ;
 
-expr : expr ('+'|'-') expr #addSub
-    | INT #int
-    | ID #id
+varAssignment
+    : ID ':=' expr                  #varAssign
+    ;
+
+expr
+    : 'new' ID '(' argList? ')'     #newExpr
+    | ID                            #idExpr
+    | INT                           #intExpr
+    ;
+
+argList
+    : expr (',' expr)*
+    ;
+
+methodCall
+    : ID '.' ID '(' argList? ')'    #methodCallExpr
     ;
 
 ID  : [a-zA-Z_][a-zA-Z_0-9]* ;
