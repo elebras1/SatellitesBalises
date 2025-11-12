@@ -37,7 +37,8 @@ public class Simulation {
             Satellite satellite = new Satellite(64);
 
             this.registerSatellite(satellite, buoy1, buoy2, buoy2);
-            this.registers(buoy1, buoy2, buoy3, satellite);
+            this.registers(buoy1, buoy2, buoy3);
+            this.registers(satellite);
 
             // set the point of the bouy
             buoy1.setPoint(new Point(this.context.getWidth() / 2, this.context.getHeight() - 150));
@@ -85,10 +86,16 @@ public class Simulation {
     }
 
 
-    private void registers(Mobile... mobiles) {
-        for(Mobile mobile : mobiles) {
-            this.eventHandler.registerListener(MovementEvent.class, mobile);
-            mobile.getEventHandler().registerListener(DataCollectionCompleteEvent.class, this);
+    private void registers(Buoy... buoys) {
+        for(Mobile buoy : buoys) {
+            this.eventHandler.registerListener(MovementEvent.class, buoy);
+            buoy.getEventHandler().registerListener(DataCollectionCompleteEvent.class, this);
+        }
+    }
+
+    private void registers(Satellite... satellites) {
+        for(Mobile satellite : satellites) {
+            this.eventHandler.registerListener(MovementEvent.class, satellite);
         }
     }
 
