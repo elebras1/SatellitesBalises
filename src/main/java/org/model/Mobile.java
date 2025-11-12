@@ -30,8 +30,4 @@ public interface Mobile {
     void stopCollectingData();
 
     boolean isCollecting();
-
-    void startSync();
-
-    void endSync();
 }
