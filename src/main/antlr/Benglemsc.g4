@@ -22,7 +22,7 @@ expr
     ;
 
 argList
-    : expr (',' expr)*
+    : expr (',' expr)*              #argListExpr
     ;
 
 methodCall
