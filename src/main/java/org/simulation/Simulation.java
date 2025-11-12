@@ -71,6 +71,7 @@ public class Simulation {
             this.eventHandler.registerListener(MovementEvent.class, buoy);
             buoy.getEventHandler().registerListener(DataCollectionCompleteEvent.class, this);
             buoy.getEventHandler().registerListener(DataCollectionEvent.class, this);
+            buoy.getEventHandler().registerListener(DiveEvent.class, this);
         }
     }
 
@@ -105,7 +106,6 @@ public class Simulation {
 
         while (true) {
             try {
-                System.out.println("ok");
                 Thread.sleep(10);
                 this.eventHandler.send(new MovementEvent(this));
             } catch (InterruptedException e) {
@@ -119,9 +119,14 @@ public class Simulation {
     }
 
     public void onDataCollection(Mobile mobile) {
-        mobile.setMovementStrategy(new DiveMovement((int) mobile.getStartDepth().getY(),1));
-       // mobile.setMovementStrategy(this.movementStrategies.get(mobile));
         mobile.setMovementStrategy(this.movementStrategies.get(mobile));
         mobile.collectingData();
+    }
+
+    public void dive(Mobile mobile) {
+        mobile.setMovementStrategy(new DiveMovement((int) mobile.getStartDepth().getY(),1));
+        // mobile.setMovementStrategy(this.movementStrategies.get(mobile));
+
+
     }
 }

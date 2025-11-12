@@ -19,7 +19,7 @@ public class SyncEvent extends AbstractEvent {
         sourceMobile.setDataCollected(0);
         System.out.println("data synced from source to target. Target now has: " + targetMobile.getDataCollected());
 
-        sourceMobile.getEventHandler().send(new DataCollectionEvent(sourceMobile));
+        sourceMobile.getEventHandler().send(new DiveEvent(sourceMobile));
         targetMobile.stopCollectingData();
     }
 }

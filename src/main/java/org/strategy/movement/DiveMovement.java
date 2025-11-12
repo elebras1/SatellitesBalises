@@ -1,5 +1,6 @@
 package org.strategy.movement;
 
+import org.event.DataCollectionEvent;
 import org.model.Mobile;
 import org.strategy.MovementStrategy;
 
@@ -20,8 +21,7 @@ public class DiveMovement implements MovementStrategy {
     public void move(Mobile mobile) {
         Point point = mobile.getPoint();
         if (point.y>= yMax ) {
-
-            speed = 0;
+            mobile.getEventHandler().send(new DataCollectionEvent(mobile));
         }
         mobile.setPoint(new Point(point.x, (point.y+speed)));
     }
