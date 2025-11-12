@@ -12,6 +12,7 @@ public class Satellite implements Mobile {
     private final int width;
     private Point point;
     private MovementStrategy movementStrategy;
+    private int dataCollected;
 
 
     public Satellite(int width) {
@@ -53,5 +54,15 @@ public class Satellite implements Mobile {
     @Override
     public void setMovementStrategy(MovementStrategy movementStrategy) {
         this.movementStrategy = movementStrategy;
+    }
+
+    @Override
+    public int getDataCollected() {
+        return dataCollected;
+    }
+
+    @Override
+    public void setDataCollected(int dataCollected) {
+        this.dataCollected = dataCollected;
     }
 }

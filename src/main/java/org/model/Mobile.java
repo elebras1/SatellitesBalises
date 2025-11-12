@@ -19,4 +19,8 @@ public interface Mobile {
     MovementStrategy getMovementStrategy();
 
     void setMovementStrategy(MovementStrategy movementStrategy);
+
+    int getDataCollected();
+
+    void setDataCollected(int dataCollected);
 }
