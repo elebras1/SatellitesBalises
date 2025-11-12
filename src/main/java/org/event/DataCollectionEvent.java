@@ -13,5 +13,6 @@ public class DataCollectionEvent extends AbstractEvent {
     @Override
     public void sendTo(Object target) {
         ((Simulation) target).onDataCollection((Mobile) this.source);
+        System.out.println(" mvt strat : before data collection ");
     }
 }

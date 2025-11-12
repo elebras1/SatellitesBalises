@@ -73,6 +73,7 @@ public class Simulation {
         for(Mobile buoy : buoys) {
             this.eventHandler.registerListener(MovementEvent.class, buoy);
             buoy.getEventHandler().registerListener(DataCollectionCompleteEvent.class, this);
+            buoy.getEventHandler().registerListener(DataCollectionEvent.class, this);
         }
     }
 
