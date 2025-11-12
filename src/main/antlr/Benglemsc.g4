@@ -1,5 +1,9 @@
 grammar Benglemsc;
 
+@header {
+    package org.antlr.generated;
+}
+
 program : statement+ ;
 
 statement : 'print' expr ';'  #print
