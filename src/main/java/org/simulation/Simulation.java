@@ -105,6 +105,7 @@ public class Simulation {
 
         while (true) {
             try {
+                System.out.println("ok");
                 Thread.sleep(10);
                 this.eventHandler.send(new MovementEvent(this));
             } catch (InterruptedException e) {
