@@ -1,8 +1,6 @@
 package org.model;
 
-import org.event.DataCollectionCompleteEvent;
-import org.event.MovementEvent;
-import org.event.PositionChangedEvent;
+import org.event.*;
 import org.eventHandler.EventHandler;
 import org.strategy.MovementStrategy;
 
@@ -108,5 +106,25 @@ public class Buoy implements Mobile {
     private void onDataCollectionComplete() {
         this.isCollecting = false;
         this.eventHandler.send(new DataCollectionCompleteEvent(this));
+    }
+
+    public void startSync(Satellite satellite) {
+        Point sourcePosition = this.getPoint();
+        Point targetPosition = satellite.getPoint();
+
+        if ((sourcePosition.x) >= (targetPosition.x - 5) && (sourcePosition.x) <= (targetPosition.x + 5)
+                && this.getDataCollected() != 0 && !this.isCollecting() && !satellite.isCollecting()) {
+            System.out.println("Syncing data between mobiles at position: " + sourcePosition);
+            satellite.startSync();
+            this.getEventHandler().send(new SyncEvent(this));
+        }
+    }
+
+    public void endSync(Satellite satellite) {
+        satellite.setDataCollected(satellite.getDataCollected() + this.getDataCollected());
+        this.setDataCollected(0);
+        System.out.println("data synced from source to target. Target now has: " + satellite.getDataCollected());
+        this.getEventHandler().send(new DiveEvent(this));
+        satellite.endSync();
     }
 }

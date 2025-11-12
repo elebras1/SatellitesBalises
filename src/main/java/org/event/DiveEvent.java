@@ -11,7 +11,6 @@ public class DiveEvent extends AbstractEvent {
 
     @Override
     public void sendTo(Object target) {
-        Mobile sourceMobile = (Mobile) getSource();
-        ((Simulation) target).dive((Mobile) this.source);
+        ((Simulation) target).dive((Mobile) getSource());
     }
 }

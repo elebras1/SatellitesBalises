@@ -11,8 +11,6 @@ public class PositionChangedEvent extends AbstractEvent {
 
     @Override
     public void sendTo(Object target) {
-        Mobile mobile = (Mobile) this.getSource();
-        View view = (View) target;
-        view.move(mobile.getPoint());
+        ((View) target).move(((Mobile)getSource()).getPoint());
     }
 }

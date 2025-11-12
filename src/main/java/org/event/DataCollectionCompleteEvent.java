@@ -11,6 +11,6 @@ public class DataCollectionCompleteEvent extends AbstractEvent {
 
     @Override
     public void sendTo(Object target) {
-        ((Simulation) target).onDataCollectionComplete((Mobile) this.source);
+        ((Simulation) target).onDataCollectionComplete((Mobile) getSource());
     }
 }

@@ -86,4 +86,12 @@ public class Satellite implements Mobile {
     public boolean isCollecting() {
         return this.isCollecting;
     }
+
+    public void startSync() {
+        this.collectingData();
+    }
+
+    public void endSync() {
+        this.stopCollectingData();
+    }
 }

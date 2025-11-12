@@ -10,7 +10,6 @@ public class MovementEvent extends AbstractEvent {
 
     @Override
     public void sendTo(Object target) {
-        Mobile mobile = (Mobile) target;
-        mobile.move();
+        ((Mobile) target).move();
     }
 }
