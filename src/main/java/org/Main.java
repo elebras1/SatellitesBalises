@@ -6,6 +6,12 @@ import org.simulation.*;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        new EditorCode(new SimulationExecutor());
+        // Créer le contexte de simulation
+        SimulationContext context = new SimulationContext(800, 600, 300);
+        Simulation simulation = new Simulation(context);
+        EditorCode editor = new EditorCode();
+        Thread simulationThread = new Thread(simulation::process);
+        simulationThread.setDaemon(false);
+        simulationThread.start();
     }
 }
