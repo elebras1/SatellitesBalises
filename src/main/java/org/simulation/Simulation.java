@@ -119,4 +119,7 @@ public class Simulation {
         mobile.setMovementStrategy(new ToSurfaceMovement(this.context, 1));
     }
 
+    public void onDataCollection(Mobile mobile) {
+        mobile.setMovementStrategy(this.movementStrategies.get(mobile));
+    }
 }

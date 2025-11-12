@@ -20,6 +20,7 @@ public class DiveMovement implements MovementStrategy {
     public void move(Mobile mobile) {
         Point point = mobile.getPoint();
         if (point.y + speed + mobile.getMobileWidth() >= yMax ) {
+
             speed = 0;
         }
         mobile.setPoint(new Point(point.x, (point.y+speed)));

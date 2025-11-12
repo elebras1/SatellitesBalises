@@ -1,5 +1,9 @@
 package org.strategy.movement;
 
+import org.event.DataCollectionCompleteEvent;
+import org.event.MovementEvent;
+import org.event.WaitingEvent;
+import org.eventHandler.EventHandler;
 import org.model.Mobile;
 import org.simulation.SimulationContext;
 import org.strategy.MovementStrategy;
@@ -9,6 +13,7 @@ import java.awt.*;
 public class ToSurfaceMovement implements MovementStrategy {
     private final SimulationContext simulationContext;
     private int speed;
+    private EventHandler eventHandler;
 
 
     public ToSurfaceMovement(SimulationContext simulationContext, int speed) {
@@ -21,7 +26,8 @@ public class ToSurfaceMovement implements MovementStrategy {
     public void move(Mobile mobile) {
         Point point = mobile.getPoint();
         if (point.y - this.speed <= this.simulationContext.getSeaLevel()) {
-            this.speed = 0;
+            mobile.getEventHandler().send(new WaitingEvent(mobile));
+            speed = 0;
         }
         point.y -= this.speed;
     }
