@@ -29,7 +29,7 @@ tasks.generateGrammarSource {
     source = fileTree("src/main/antlr") {
         include("**/*.g4")
     }
-    outputDirectory = file("build/generated-src/antlr/main")
+    outputDirectory = file("build/org/antlr/generated")
 }
 
 tasks.test {

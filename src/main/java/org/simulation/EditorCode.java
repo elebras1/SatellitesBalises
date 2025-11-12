@@ -6,17 +6,14 @@ import java.awt.event.*;
 public class EditorCode extends Frame {
 
     private final TextArea codeArea;
-    private final Executor executor;
 
-    public EditorCode(Executor executor) {
+    public EditorCode() {
         super("Éditeur de Code - Simulation");
-        this.executor = executor;
-
         this.setSize(900, 700);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout(10, 10));
 
-        Label titleLabel = new Label("Éditeur de Code pour la Simulation", Label.CENTER);
+        Label titleLabel = new Label("Éditeur de code", Label.CENTER);
         titleLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
         Panel titlePanel = new Panel(new BorderLayout());
         titlePanel.add(titleLabel, BorderLayout.CENTER);
@@ -37,8 +34,8 @@ public class EditorCode extends Frame {
         this.add(this.codeArea, BorderLayout.CENTER);
 
         Panel buttonPanel = new Panel(new FlowLayout(FlowLayout.CENTER, 20, 10));
-        Button runButton = new Button("▶ Exécuter");
-        Button clearButton = new Button("🧹 Effacer");
+        Button runButton = new Button("Exécuter");
+        Button clearButton = new Button("Effacer");
 
         buttonPanel.add(runButton);
         buttonPanel.add(clearButton);
@@ -59,19 +56,6 @@ public class EditorCode extends Frame {
 
     private void runCode() {
         String code = this.codeArea.getText().trim();
-        if (code.isEmpty()) {
-            return;
-        }
-
-        this.dispose();
-
-        new Thread(() -> {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            this.executor.execute(code);
-        }).start();
     }
+
 }
