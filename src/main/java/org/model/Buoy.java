@@ -117,6 +117,7 @@ public class Buoy implements Mobile {
             System.out.println("Syncing data between mobiles at position: " + sourcePosition);
             satellite.startSync();
             this.getEventHandler().send(new SyncEvent(this));
+            this.getEventHandler().send(new SyncViewEvent(this));
         }
     }
 

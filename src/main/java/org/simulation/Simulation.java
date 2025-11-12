@@ -15,7 +15,9 @@ import org.view.SatelliteView;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Simulation {
@@ -23,12 +25,17 @@ public class Simulation {
     private final NiSpace space;
     private final EventHandler eventHandler;
     private Map<Mobile, MovementStrategy> movementStrategies;
+    private List<Satellite> satellites;
+    private List<Buoy> buoys;
+
 
     public Simulation(SimulationContext context) {
         this.context = context;
         this.space = new NiSpace("Simulation Space", new Dimension(context.getWidth(), context.getHeight()));
         this.eventHandler = new EventHandler();
         this.movementStrategies = new HashMap<>();
+        this.satellites = new ArrayList<>();
+        this.buoys = new ArrayList<>();
         this.initialize();
     }
 
@@ -37,20 +44,11 @@ public class Simulation {
             Buoy buoy1 = this.addBuoy(64, 800, this.context.getWidth() / 2, this.context.getHeight() - 150, new HorizontalMovement(this.context, 1));
             Buoy buoy2 = this.addBuoy(64, 4000, this.context.getWidth() / 2 - 100, this.context.getHeight() - 200, new HorizontalMovement(this.context, 2));
             Buoy buoy3 = this.addBuoy(64, 2000, this.context.getWidth() / 2 + 100, this.context.getHeight() - 250, new SinusMovement(this.context, 1));
-            Satellite satellite = new Satellite(64);
+            Satellite satellite1 = this.addSatellite(64, this.context.getWidth() / 2, 150, new HorizontalMovementSatellite(this.context, 1));
 
-            this.registerSatellite(satellite, buoy1, buoy2, buoy3);
-            this.registers(buoy1, buoy2, buoy3);
-            this.registers(satellite);
-
-            // set the point of the satellite
-            satellite.setPoint(new Point(this.context.getWidth() / 2, 150));
-            SatelliteView satelliteView1 = new SatelliteView(new File("src/main/resources/satellite.png"));
-            // set the location of the satellite view to the point of the satellite
-            satelliteView1.setLocation(satellite.getPoint());
-            this.space.add(satelliteView1);
-            satellite.getEventHandler().registerListener(PositionChangedEvent.class, satelliteView1);
-            satellite.setMovementStrategy(new HorizontalMovementSatellite(this.context, 1));
+            this.registerSatellite(this.satellites, this.buoys);
+            this.registersListBuoys(this.buoys);
+            this.registersListSatellites(this.satellites);
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -58,15 +56,16 @@ public class Simulation {
         this.addSea();
     }
 
-    private void registerSatellite(Satellite satellite, Buoy... buoys) {
-        for(Buoy buoy : buoys) {
-            buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
-            buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
-        }
+    private void registerSatellite(List<Satellite> satellites, List<Buoy> buoys) {
+         for (Satellite satellite : satellites) {
+             for (Buoy buoy : buoys) {
+                 buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
+                 buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
+             }
+         }
     }
 
-
-    private void registers(Buoy... buoys) {
+    private void registersListBuoys(List<Buoy> buoys) {
         for(Mobile buoy : buoys) {
             this.eventHandler.registerListener(MovementEvent.class, buoy);
             buoy.getEventHandler().registerListener(DataCollectionCompleteEvent.class, this);
@@ -75,10 +74,24 @@ public class Simulation {
         }
     }
 
-    private void registers(Satellite... satellites) {
+    private void registersListSatellites(List<Satellite> satellites) {
         for(Mobile satellite : satellites) {
             this.eventHandler.registerListener(MovementEvent.class, satellite);
         }
+    }
+
+    private Satellite addSatellite(int width, int x, int y, MovementStrategy movementStrategy) throws IOException {
+        Satellite satellite = new Satellite(width);
+        satellite.setPoint(new Point(x, y));
+        this.movementStrategies.put(satellite, movementStrategy);
+        SatelliteView satelliteView1 = new SatelliteView(new File("src/main/resources/satellite.png"));
+        satelliteView1.setLocation(satellite.getPoint());
+        this.space.add(satelliteView1);
+        satellite.getEventHandler().registerListener(PositionChangedEvent.class, satelliteView1);
+        satellite.getEventHandler().registerListener(SyncViewEvent.class, satelliteView1);
+        satellite.setMovementStrategy(movementStrategy);
+        this.satellites.add(satellite);
+        return satellite;
     }
 
     private Buoy addBuoy(int width, int maxData, int x, int y, MovementStrategy movementStrategy) throws IOException {
@@ -88,8 +101,10 @@ public class Simulation {
         BuoyView buoyView1 = new BuoyView(new File("src/main/resources/submarine.png"));
         buoyView1.setLocation(buoy.getPoint());
         this.space.add(buoyView1);
-        buoy.getEventHandler().registerListener(PositionChangedEvent.class,buoyView1);
+        buoy.getEventHandler().registerListener(PositionChangedEvent.class, buoyView1);
+        buoy.getEventHandler().registerListener(SyncViewEvent.class, buoyView1);
         buoy.setMovementStrategy(movementStrategy);
+        this.buoys.add(buoy);
         return buoy;
     }
 
@@ -126,7 +141,5 @@ public class Simulation {
     public void dive(Mobile mobile) {
         mobile.setMovementStrategy(new DiveMovement((int) mobile.getStartDepth().getY(),1));
         // mobile.setMovementStrategy(this.movementStrategies.get(mobile));
-
-
     }
 }

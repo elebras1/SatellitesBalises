@@ -2,6 +2,7 @@ package org.model;
 
 
 import org.event.PositionChangedEvent;
+import org.event.SyncViewEvent;
 import org.eventHandler.EventHandler;
 import org.strategy.MovementStrategy;
 
@@ -89,6 +90,7 @@ public class Satellite implements Mobile {
 
     public void startSync() {
         this.collectingData();
+        this.eventHandler.send(new SyncViewEvent(this));
     }
 
     public void endSync() {
