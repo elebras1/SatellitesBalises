@@ -1,6 +1,6 @@
 package org.model;
 
-import org.event.MovementEvent;
+
 import org.event.PositionChangedEvent;
 import org.eventHandler.EventHandler;
 import org.strategy.MovementStrategy;
@@ -13,6 +13,7 @@ public class Satellite implements Mobile {
     private Point point;
     private MovementStrategy movementStrategy;
     private int dataCollected;
+    private boolean isCollecting;
 
 
     public Satellite(int width) {
@@ -69,5 +70,20 @@ public class Satellite implements Mobile {
     @Override
     public Point getStartDepth() {
         return null;
+    }
+
+    @Override
+    public void collectingData() {
+        this.isCollecting = true;
+    }
+
+    @Override
+    public void stopCollectingData() {
+        this.isCollecting = false;
+    }
+
+    @Override
+    public boolean isCollecting() {
+        return this.isCollecting;
     }
 }

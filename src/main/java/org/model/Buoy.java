@@ -78,6 +78,21 @@ public class Buoy implements Mobile {
         this.dataCollected = dataCollected;
     }
 
+    @Override
+    public void collectingData() {
+        this.isCollecting = true;
+    }
+
+    @Override
+    public void stopCollectingData() {
+        this.isCollecting = false;
+    }
+
+    @Override
+    public boolean isCollecting() {
+        return this.isCollecting;
+    }
+
     public Point getStartDepth() {return startDepth;}
 
     private void collectData() {
