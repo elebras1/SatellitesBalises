@@ -7,6 +7,7 @@ import org.eventHandler.EventHandler;
 import org.model.Buoy;
 import org.model.Mobile;
 import org.model.Satellite;
+import org.strategy.MovementStrategy;
 import org.strategy.movement.HorizontalMovement;
 import org.strategy.movement.HorizontalMovementSatellite;
 import org.strategy.movement.SinusMovement;
@@ -16,52 +17,34 @@ import org.view.SatelliteView;
 
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Simulation {
     private final SimulationContext context;
     private final NiSpace space;
     private final EventHandler eventHandler;
+    private Map<Mobile, MovementStrategy> movementStrategies;
 
     public Simulation(SimulationContext context) {
         this.context = context;
         this.space = new NiSpace("Simulation Space", new Dimension(context.getWidth(), context.getHeight()));
         this.eventHandler = new EventHandler();
+        this.movementStrategies = new HashMap<>();
         this.initialize();
     }
 
     private void initialize() {
         try {
-            Buoy buoy1 = new Buoy(64, 800);
-            Buoy buoy2 = new Buoy(64, 4000);
-            Buoy buoy3 = new Buoy(64, 2000);
+            Buoy buoy1 = this.addBuoy(64, 800, this.context.getWidth() / 2, this.context.getHeight() - 150, new HorizontalMovement(this.context, 1));
+            Buoy buoy2 = this.addBuoy(64, 4000, this.context.getWidth() / 2 - 100, this.context.getHeight() - 200, new HorizontalMovement(this.context, 2));
+            Buoy buoy3 = this.addBuoy(64, 2000, this.context.getWidth() / 2 + 100, this.context.getHeight() - 250, new SinusMovement(this.context, 1));
             Satellite satellite = new Satellite(64);
 
             this.registerSatellite(satellite, buoy1, buoy2, buoy2);
             this.registers(buoy1, buoy2, buoy3);
             this.registers(satellite);
-
-            // set the point of the bouy
-            buoy1.setPoint(new Point(this.context.getWidth() / 2, this.context.getHeight() - 150));
-            BuoyView buoyView1 = new BuoyView(new File("src/main/resources/submarine.png"));
-            // set the location of the buoy view to the point of the buoy
-            buoyView1.setLocation(buoy1.getPoint());
-            this.space.add(buoyView1);
-            buoy1.getEventHandler().registerListener(PositionChangedEvent.class,buoyView1);
-            buoy1.setMovementStrategy(new HorizontalMovement(this.context, 1));
-
-            buoy2.setPoint(new Point(this.context.getWidth() / 2 - 100, this.context.getHeight() - 200));
-            BuoyView buoyView2 = new BuoyView(new File("src/main/resources/submarine.png"));
-            buoyView2.setLocation(buoy2.getPoint());
-            this.space.add(buoyView2);
-            buoy2.getEventHandler().registerListener(PositionChangedEvent.class,buoyView2);
-            buoy2.setMovementStrategy(new HorizontalMovement(this.context, 2));
-
-            buoy3.setPoint(new Point(this.context.getWidth() / 2 + 100, this.context.getHeight() - 250));
-            BuoyView buoyView3 = new BuoyView(new File("src/main/resources/submarine.png"));
-            buoyView3.setLocation(buoy3.getPoint());
-            this.space.add(buoyView3);
-            buoy3.getEventHandler().registerListener(PositionChangedEvent.class,buoyView3);
-            buoy3.setMovementStrategy(new SinusMovement(this.context, 1));
 
             // set the point of the satellite
             satellite.setPoint(new Point(this.context.getWidth() / 2, 150));
@@ -97,6 +80,18 @@ public class Simulation {
         for(Mobile satellite : satellites) {
             this.eventHandler.registerListener(MovementEvent.class, satellite);
         }
+    }
+
+    private Buoy addBuoy(int width, int maxData, int x, int y, MovementStrategy movementStrategy) throws IOException {
+        Buoy buoy = new Buoy(width, maxData);
+        buoy.setPoint(new Point(x, y));
+        this.movementStrategies.put(buoy, movementStrategy);
+        BuoyView buoyView1 = new BuoyView(new File("src/main/resources/submarine.png"));
+        buoyView1.setLocation(buoy.getPoint());
+        this.space.add(buoyView1);
+        buoy.getEventHandler().registerListener(PositionChangedEvent.class,buoyView1);
+        buoy.setMovementStrategy(movementStrategy);
+        return buoy;
     }
 
     private void addSea() {
