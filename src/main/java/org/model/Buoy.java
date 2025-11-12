@@ -73,6 +73,21 @@ public class Buoy implements Mobile {
         this.dataCollected = dataCollected;
     }
 
+    @Override
+    public void collectingData() {
+        this.isCollecting = true;
+    }
+
+    @Override
+    public void stopCollectingData() {
+        this.isCollecting = false;
+    }
+
+    @Override
+    public boolean isCollecting() {
+        return this.isCollecting;
+    }
+
     private void collectData() {
         if (this.isCollecting && this.dataCollected < this.maxData) {
             this.dataCollected += 1 + this.random.nextInt(5);

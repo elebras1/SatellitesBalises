@@ -23,4 +23,10 @@ public interface Mobile {
     int getDataCollected();
 
     void setDataCollected(int dataCollected);
+
+    void collectingData();
+
+    void stopCollectingData();
+
+    boolean isCollecting();
 }
