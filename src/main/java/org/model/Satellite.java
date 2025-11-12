@@ -15,7 +15,7 @@ public class Satellite implements Mobile {
     private Point point;
     private MovementStrategy movementStrategy;
     private int dataCollected;
-    private boolean isCollecting;
+    private boolean isSyncing = false;
 
 
     public Satellite(int width) {
@@ -75,27 +75,27 @@ public class Satellite implements Mobile {
     }
 
     @Override
-    public void collectingData() {
-        this.isCollecting = true;
+    public void startSyncingData() {
+        this.isSyncing = true;
     }
 
     @Override
-    public void stopCollectingData() {
-        this.isCollecting = false;
+    public void stopSyncingData() {
+        this.isSyncing = false;
     }
 
     @Override
-    public boolean isCollecting() {
-        return this.isCollecting;
+    public boolean isSyncing() {
+        return this.isSyncing;
     }
 
     public void startSync() {
-        this.collectingData();
+        this.startSyncingData();
         this.getEventHandler().send(new StartSyncViewEvent(this));
     }
 
     public void endSync() {
-        this.stopCollectingData();
+        this.stopSyncingData();
         this.getEventHandler().send(new EndSyncViewEvent(this));
     }
 }

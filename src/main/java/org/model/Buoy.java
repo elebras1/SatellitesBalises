@@ -18,6 +18,7 @@ public class Buoy implements Mobile {
     private int dataCollected;
     private final int maxData;
     private boolean isCollecting = true;
+    private boolean isSyncing = false;
     private final Random random;
     private final Point startDepth;
 
@@ -79,22 +80,34 @@ public class Buoy implements Mobile {
         this.dataCollected = dataCollected;
     }
 
-    @Override
     public void collectingData() {
         this.isCollecting = true;
     }
 
-    @Override
     public void stopCollectingData() {
         this.isCollecting = false;
     }
 
-    @Override
     public boolean isCollecting() {
         return this.isCollecting;
     }
 
     public Point getStartDepth() {return startDepth;}
+
+    @Override
+    public void startSyncingData() {
+        this.isSyncing = true;
+    }
+
+    @Override
+    public void stopSyncingData() {
+        this.isSyncing = false;
+    }
+
+    @Override
+    public boolean isSyncing() {
+        return this.isSyncing;
+    }
 
     private void collectData() {
         if (this.isCollecting && this.dataCollected < this.maxData) {
@@ -107,7 +120,7 @@ public class Buoy implements Mobile {
     }
 
     private void onDataCollectionComplete() {
-        this.isCollecting = false;
+        this.stopCollectingData();
         this.eventHandler.send(new DataCollectionCompleteEvent(this));
     }
 
@@ -116,9 +129,10 @@ public class Buoy implements Mobile {
         Point targetPosition = satellite.getPoint();
 
         if ((sourcePosition.x) >= (targetPosition.x - 20) && (sourcePosition.x) <= (targetPosition.x + 20)
-                && this.getDataCollected() != 0 && !this.isCollecting() && !satellite.isCollecting()) {
+                && this.getDataCollected() != 0 && !this.isCollecting() && satellite.isSyncing() == false && this.isSyncing() == false) {
 
             this.getEventHandler().send(new StartSyncViewEvent(this));
+            this.startSyncingData();
             satellite.startSync();
 
             ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
@@ -141,6 +155,7 @@ public class Buoy implements Mobile {
     public void endSync(Satellite satellite) {
         satellite.endSync();
         this.getEventHandler().send(new EndSyncViewEvent(this));
+        this.stopSyncingData();
         this.getEventHandler().send(new DiveEvent(this));
     }
 }

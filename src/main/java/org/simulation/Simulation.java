@@ -45,6 +45,8 @@ public class Simulation {
             Buoy buoy2 = this.addBuoy(64, 4000, this.context.getWidth() / 2 - 100, this.context.getHeight() - 200, new HorizontalMovement(this.context, 2));
             Buoy buoy3 = this.addBuoy(64, 2000, this.context.getWidth() / 2 + 100, this.context.getHeight() - 250, new SinusMovement(this.context, 1));
             Satellite satellite1 = this.addSatellite(64, this.context.getWidth() / 2, 150, new HorizontalMovementSatellite(this.context, 1));
+            Satellite satellite2 = this.addSatellite(64, (this.context.getWidth()-30) / 2, 100, new HorizontalMovementSatellite(this.context, 1));
+
 
             this.registerSatellite(this.satellites, this.buoys);
             this.registersListBuoys(this.buoys);
@@ -137,7 +139,7 @@ public class Simulation {
 
     public void onDataCollection(Mobile mobile) {
         mobile.setMovementStrategy(this.movementStrategies.get(mobile));
-        mobile.collectingData();
+        ((Buoy)mobile).collectingData();
     }
 
     public void dive(Mobile mobile) {

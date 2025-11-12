@@ -25,9 +25,9 @@ public interface Mobile {
     void setDataCollected(int dataCollected);
     public Point getStartDepth();
 
-    void collectingData();
+    void startSyncingData();
 
-    void stopCollectingData();
+    void stopSyncingData();
 
-    boolean isCollecting();
+    boolean isSyncing();
 }
