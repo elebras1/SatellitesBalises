@@ -6,6 +6,9 @@ import org.strategy.MovementStrategy;
 
 import java.awt.*;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Buoy implements Mobile {
     private final EventHandler eventHandler;
@@ -112,20 +115,32 @@ public class Buoy implements Mobile {
         Point sourcePosition = this.getPoint();
         Point targetPosition = satellite.getPoint();
 
-        if ((sourcePosition.x) >= (targetPosition.x - 5) && (sourcePosition.x) <= (targetPosition.x + 5)
+        if ((sourcePosition.x) >= (targetPosition.x - 20) && (sourcePosition.x) <= (targetPosition.x + 20)
                 && this.getDataCollected() != 0 && !this.isCollecting() && !satellite.isCollecting()) {
-            System.out.println("Syncing data between mobiles at position: " + sourcePosition);
+
+            this.getEventHandler().send(new StartSyncViewEvent(this));
             satellite.startSync();
-            this.getEventHandler().send(new SyncEvent(this));
-            this.getEventHandler().send(new SyncViewEvent(this));
+
+            ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
+            scheduler.schedule(() -> {
+                //simulation du transfert terminé après 2 secondes
+                satellite.setDataCollected(satellite.getDataCollected() + this.getDataCollected());
+                this.setDataCollected(0);
+
+                this.getEventHandler().send(new SyncEvent(this));
+                this.endSync(satellite);
+
+                scheduler.shutdown();
+
+            }, 2, TimeUnit.SECONDS); // attendre 2 secondes sans bloquer
+
         }
     }
 
     public void endSync(Satellite satellite) {
-        satellite.setDataCollected(satellite.getDataCollected() + this.getDataCollected());
-        this.setDataCollected(0);
-        System.out.println("data synced from source to target. Target now has: " + satellite.getDataCollected());
-        this.getEventHandler().send(new DiveEvent(this));
         satellite.endSync();
+        this.getEventHandler().send(new EndSyncViewEvent(this));
+        this.getEventHandler().send(new DiveEvent(this));
     }
 }

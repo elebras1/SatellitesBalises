@@ -40,19 +40,19 @@ public class AntennaSignal {
         return signal;
     }
 
-    /*public static void main(String args[]) throws IOException {
-        AntennaSignal antennaSignal = new AntennaSignal(new Point(-50,-50));
+    public static void main(String args[]) throws IOException {
+        AntennaSignal antennaSignal = new AntennaSignal(new Point(0,0));
         NiSpace space = new NiSpace("Test Antenna Signal", new Dimension(800, 600));
         space.setBounds(0,0,800,600);
 
         space.openInWindow();
 
         SatelliteView satelliteView = new SatelliteView(new File("src/main/resources/satellite.png"));
-        satelliteView.setLocation(new Point(237,237));
+        satelliteView.setLocation(new Point(137,137));
         space.add(satelliteView);
         space.repaint();
-        satelliteView.add(antennaSignal.createSignal());
+        space.add(antennaSignal.createSignal());
         space.repaint();
 
-    }*/
+    }
 }

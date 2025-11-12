@@ -88,7 +88,8 @@ public class Simulation {
         satelliteView1.setLocation(satellite.getPoint());
         this.space.add(satelliteView1);
         satellite.getEventHandler().registerListener(PositionChangedEvent.class, satelliteView1);
-        satellite.getEventHandler().registerListener(SyncViewEvent.class, satelliteView1);
+        satellite.getEventHandler().registerListener(StartSyncViewEvent.class, satelliteView1);
+        satellite.getEventHandler().registerListener(EndSyncViewEvent.class, satelliteView1);
         satellite.setMovementStrategy(movementStrategy);
         this.satellites.add(satellite);
         return satellite;
@@ -102,7 +103,8 @@ public class Simulation {
         buoyView1.setLocation(buoy.getPoint());
         this.space.add(buoyView1);
         buoy.getEventHandler().registerListener(PositionChangedEvent.class, buoyView1);
-        buoy.getEventHandler().registerListener(SyncViewEvent.class, buoyView1);
+        buoy.getEventHandler().registerListener(StartSyncViewEvent.class, buoyView1);
+        buoy.getEventHandler().registerListener(EndSyncViewEvent.class, buoyView1);
         buoy.setMovementStrategy(movementStrategy);
         this.buoys.add(buoy);
         return buoy;

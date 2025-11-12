@@ -1,8 +1,9 @@
 package org.model;
 
 
+import org.event.EndSyncViewEvent;
 import org.event.PositionChangedEvent;
-import org.event.SyncViewEvent;
+import org.event.StartSyncViewEvent;
 import org.eventHandler.EventHandler;
 import org.strategy.MovementStrategy;
 
@@ -90,10 +91,11 @@ public class Satellite implements Mobile {
 
     public void startSync() {
         this.collectingData();
-        this.eventHandler.send(new SyncViewEvent(this));
+        this.getEventHandler().send(new StartSyncViewEvent(this));
     }
 
     public void endSync() {
         this.stopCollectingData();
+        this.getEventHandler().send(new EndSyncViewEvent(this));
     }
 }
