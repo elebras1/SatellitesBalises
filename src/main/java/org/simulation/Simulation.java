@@ -42,7 +42,7 @@ public class Simulation {
             Buoy buoy3 = this.addBuoy(64, 2000, this.context.getWidth() / 2 + 100, this.context.getHeight() - 250, new SinusMovement(this.context, 1));
             Satellite satellite = new Satellite(64);
 
-            this.registerSatellite(satellite, buoy1, buoy2, buoy2);
+            this.registerSatellite(satellite, buoy1, buoy2, buoy3);
             this.registers(buoy1, buoy2, buoy3);
             this.registers(satellite);
 
@@ -73,6 +73,7 @@ public class Simulation {
         for(Mobile buoy : buoys) {
             this.eventHandler.registerListener(MovementEvent.class, buoy);
             buoy.getEventHandler().registerListener(DataCollectionCompleteEvent.class, this);
+            buoy.getEventHandler().registerListener(DataCollectionEvent.class, this);
         }
     }
 
@@ -122,5 +123,6 @@ public class Simulation {
 
     public void onDataCollection(Mobile mobile) {
         mobile.setMovementStrategy(this.movementStrategies.get(mobile));
+        mobile.collectingData();
     }
 }

@@ -13,7 +13,6 @@ import java.awt.*;
 public class ToSurfaceMovement implements MovementStrategy {
     private final SimulationContext simulationContext;
     private int speed;
-    private EventHandler eventHandler;
 
 
     public ToSurfaceMovement(SimulationContext simulationContext, int speed) {
@@ -25,7 +24,7 @@ public class ToSurfaceMovement implements MovementStrategy {
     @Override
     public void move(Mobile mobile) {
         Point point = mobile.getPoint();
-        if (point.y - this.speed <= this.simulationContext.getSeaLevel()) {
+        if (point.y <= this.simulationContext.getSeaLevel()-20) {
             mobile.getEventHandler().send(new WaitingEvent(mobile));
             speed = 0;
         }

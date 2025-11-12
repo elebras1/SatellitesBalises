@@ -13,6 +13,7 @@ public class Satellite implements Mobile {
     private Point point;
     private MovementStrategy movementStrategy;
     private int dataCollected;
+    private boolean isCollecting = false;
 
 
     public Satellite(int width) {
@@ -64,5 +65,20 @@ public class Satellite implements Mobile {
     @Override
     public void setDataCollected(int dataCollected) {
         this.dataCollected = dataCollected;
+    }
+
+    @Override
+    public void collectingData() {
+        this.isCollecting = true;
+    }
+
+    @Override
+    public void stopCollectingData() {
+        this.isCollecting = false;
+    }
+
+    @Override
+    public boolean isCollecting() {
+        return this.isCollecting;
     }
 }
