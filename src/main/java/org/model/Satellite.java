@@ -65,4 +65,9 @@ public class Satellite implements Mobile {
     public void setDataCollected(int dataCollected) {
         this.dataCollected = dataCollected;
     }
+
+    @Override
+    public Point getStartDepth() {
+        return null;
+    }
 }

@@ -8,10 +8,7 @@ import org.model.Buoy;
 import org.model.Mobile;
 import org.model.Satellite;
 import org.strategy.MovementStrategy;
-import org.strategy.movement.HorizontalMovement;
-import org.strategy.movement.HorizontalMovementSatellite;
-import org.strategy.movement.SinusMovement;
-import org.strategy.movement.ToSurfaceMovement;
+import org.strategy.movement.*;
 import org.view.BuoyView;
 import org.view.SatelliteView;
 
@@ -84,8 +81,8 @@ public class Simulation {
     }
 
     private Buoy addBuoy(int width, int maxData, int x, int y, MovementStrategy movementStrategy) throws IOException {
-        Buoy buoy = new Buoy(width, maxData);
-        buoy.setPoint(new Point(x, y));
+        Buoy buoy = new Buoy(width, maxData,new Point(x, y));
+        System.out.println(x  +","+y);
         this.movementStrategies.put(buoy, movementStrategy);
         BuoyView buoyView1 = new BuoyView(new File("src/main/resources/submarine.png"));
         buoyView1.setLocation(buoy.getPoint());
@@ -121,6 +118,7 @@ public class Simulation {
     }
 
     public void onDataCollection(Mobile mobile) {
-        mobile.setMovementStrategy(this.movementStrategies.get(mobile));
+        mobile.setMovementStrategy(new DiveMovement((int) mobile.getStartDepth().getY(),1));
+       // mobile.setMovementStrategy(this.movementStrategies.get(mobile));
     }
 }

@@ -23,4 +23,5 @@ public interface Mobile {
     int getDataCollected();
 
     void setDataCollected(int dataCollected);
+    public Point getStartDepth();
 }

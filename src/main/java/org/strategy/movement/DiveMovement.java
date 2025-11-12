@@ -19,7 +19,7 @@ public class DiveMovement implements MovementStrategy {
     @Override
     public void move(Mobile mobile) {
         Point point = mobile.getPoint();
-        if (point.y + speed + mobile.getMobileWidth() >= yMax ) {
+        if (point.y>= yMax ) {
 
             speed = 0;
         }

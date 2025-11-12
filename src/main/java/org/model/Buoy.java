@@ -18,12 +18,17 @@ public class Buoy implements Mobile {
     private final int maxData;
     private boolean isCollecting = true;
     private final Random random;
+    private final Point startDepth;
 
-    public Buoy(int width, int maxData) {
+
+
+    public Buoy(int width, int maxData, Point startDepth) {
+        this.startDepth = startDepth;
         this.eventHandler = new EventHandler();
         this.width = width;
         this.maxData = maxData;
         this.random = new Random();
+        this.setPoint( this.startDepth);
     }
 
     @Override
@@ -72,6 +77,8 @@ public class Buoy implements Mobile {
     public void setDataCollected(int dataCollected) {
         this.dataCollected = dataCollected;
     }
+
+    public Point getStartDepth() {return startDepth;}
 
     private void collectData() {
         if (this.isCollecting && this.dataCollected < this.maxData) {
