@@ -32,7 +32,6 @@ public class BuoyView extends NiImage implements View {
         ellipse = this.add(new AntennaSignal(new Point(point.x - 137,point.y - 137)).createSignal());
         this.getParent().add(ellipse);
         this.getParent().repaint();
-        System.out.println("Sync BuoyView started.");
     }
 
     @Override
@@ -42,6 +41,5 @@ public class BuoyView extends NiImage implements View {
             this.getParent().repaint();
             ellipse = null;
         }
-        System.out.println("Sync BuoyView ended.");
     }
 }
