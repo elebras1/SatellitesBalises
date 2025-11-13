@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Simulation implements World {
+public class SimulationInterfaceWithUI implements SimulationInterface, World {
     private final SimulationContext context;
     private final NiSpace space;
     private final EventHandler eventHandler;
@@ -29,7 +29,7 @@ public class Simulation implements World {
     private List<Buoy> buoys;
 
 
-    public Simulation(SimulationContext context) {
+    public SimulationInterfaceWithUI(SimulationContext context) {
         this.context = context;
         this.space = new NiSpace("Simulation Space", new Dimension(context.getWidth(), context.getHeight()));
         this.eventHandler = new EventHandler();
@@ -104,13 +104,11 @@ public class Simulation implements World {
         SatelliteView satelliteView1 = new SatelliteView(new File("src/main/resources/satellite.png"));
         satelliteView1.setLocation(satellite.getPoint());
         this.space.add(satelliteView1);
-        this.space.setComponentZOrder(satelliteView1, 0);
         satellite.getEventHandler().registerListener(PositionChangedEvent.class, satelliteView1);
         satellite.getEventHandler().registerListener(StartSyncViewEvent.class, satelliteView1);
         satellite.getEventHandler().registerListener(EndSyncViewEvent.class, satelliteView1);
         satellite.setMovementStrategy(movementStrategy);
         this.satellites.add(satellite);
-        this.space.repaint();
         return satellite;
     }
 
@@ -152,17 +150,19 @@ public class Simulation implements World {
         }
     }
 
+    @Override
     public void onDataCollectionComplete(Mobile mobile) {
         mobile.setMovementStrategy(new ToSurfaceMovement(this.context, 1));
     }
 
+    @Override
     public void onDataCollection(Mobile mobile) {
         mobile.setMovementStrategy(this.movementStrategies.get(mobile));
         ((Buoy)mobile).collectingData();
     }
 
-    public void dive(Mobile mobile) {
+    @Override
+    public void onEndSync(Mobile mobile) {
         mobile.setMovementStrategy(new DiveMovement((int) mobile.getStartDepth().getY(),1));
-        // mobile.setMovementStrategy(this.movementStrategies.get(mobile));
     }
 }

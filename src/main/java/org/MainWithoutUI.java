@@ -1,15 +1,15 @@
 package org;
 
-import org.simulation.*;
+import org.simulation.EditorCode;
+import org.simulation.SimulationContext;
+import org.simulation.SimulationInterfaceWithoutUI;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
+public class MainWithoutUI {
     public static void main(String[] args) {
         // Créer le contexte de simulation
         SimulationContext context = new SimulationContext(800, 600, 300);
-        Simulation simulation = new Simulation(context);
-        EditorCode editor = new EditorCode(simulation);
+        SimulationInterfaceWithoutUI simulation = new SimulationInterfaceWithoutUI(context);
+        EditorCode editor = new EditorCode();
         Thread simulationThread = new Thread(simulation::process);
         simulationThread.setDaemon(false);
         simulationThread.start();

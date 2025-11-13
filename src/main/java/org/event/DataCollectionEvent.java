@@ -3,9 +3,7 @@ package org.event;
 
 import org.eventHandler.AbstractEvent;
 import org.model.Mobile;
-import org.simulation.Simulation;
-import org.strategy.movement.DiveMovement;
-import org.strategy.movement.ToSurfaceMovement;
+import org.simulation.SimulationInterface;
 
 public class DataCollectionEvent extends AbstractEvent {
     public DataCollectionEvent(Object source) {
@@ -14,6 +12,6 @@ public class DataCollectionEvent extends AbstractEvent {
 
     @Override
     public void sendTo(Object target) {
-        ((Simulation) target).onDataCollection((Mobile) getSource());
+        ((SimulationInterface) target).onDataCollection((Mobile) getSource());
     }
 }

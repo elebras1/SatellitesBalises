@@ -2,7 +2,7 @@ package org.event;
 
 import org.eventHandler.AbstractEvent;
 import org.model.Mobile;
-import org.simulation.Simulation;
+import org.simulation.SimulationInterface;
 
 public class DiveEvent extends AbstractEvent {
     public DiveEvent(Object source) {
@@ -11,6 +11,6 @@ public class DiveEvent extends AbstractEvent {
 
     @Override
     public void sendTo(Object target) {
-        ((Simulation) target).dive((Mobile) getSource());
+        ((SimulationInterface) target).onEndSync((Mobile) getSource());
     }
 }
