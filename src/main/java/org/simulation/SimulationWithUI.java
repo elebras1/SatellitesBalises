@@ -46,12 +46,16 @@ public class SimulationWithUI implements SimulationInterface, World {
 
     @Override
     public Buoy createBuoy(int width, int maxData, int x, int y, MovementStrategy movementStrategy) throws IOException {
-        return this.addBuoy(width, maxData, x, y, movementStrategy);
+        Buoy buoy = this.addBuoy(width, maxData, x, y, movementStrategy);
+        this.registerSatelliteSignleBuoys(this.satellites, buoy);
+        return buoy;
     }
 
     @Override
     public Satellite createSatellite(int width, int x, int y, MovementStrategy movementStrategy) throws IOException {
-        return this.addSatellite(width, x, y, movementStrategy);
+        Satellite satellite = this.addSatellite(width, x, y, movementStrategy);
+        this.registerSatelliteToBuoySingle(this.buoys, satellite);
+        return satellite;
     }
 
     private void initialize() {
@@ -77,30 +81,6 @@ public class SimulationWithUI implements SimulationInterface, World {
             exception.printStackTrace();
         }
         this.addSea();
-    }
-
-    private void registerSatellite(List<Satellite> satellites, List<Buoy> buoys) {
-         for (Satellite satellite : satellites) {
-             for (Buoy buoy : buoys) {
-                 buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
-                 buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
-             }
-         }
-    }
-
-    private void registersListBuoys(List<Buoy> buoys) {
-        for(Mobile buoy : buoys) {
-            this.eventHandler.registerListener(MovementEvent.class, buoy);
-            buoy.getEventHandler().registerListener(DataCollectionCompleteEvent.class, this);
-            buoy.getEventHandler().registerListener(DataCollectionEvent.class, this);
-            buoy.getEventHandler().registerListener(DiveEvent.class, this);
-        }
-    }
-
-    private void registersListSatellites(List<Satellite> satellites) {
-        for(Mobile satellite : satellites) {
-            this.eventHandler.registerListener(MovementEvent.class, satellite);
-        }
     }
 
     private void registerSatelliteSignleBuoys(List<Satellite> satellites, Buoy buoy) {

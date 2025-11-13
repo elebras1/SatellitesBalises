@@ -19,13 +19,27 @@ dependencies {
 }
 
 application {
-    mainClass.set("org.Main")
+    mainClass.set("org.MainWithUi")
 }
 
 tasks.generateGrammarSource {
     maxHeapSize = "64m"
     arguments = listOf("-visitor", "-listener")
     outputDirectory = file("build/generated-src/antlr/main/org/antlr/generated")
+}
+
+tasks.register<JavaExec>("runWithUi") {
+    group = "application"
+    description = "Lance le programme avec interface"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("org.MainWithUI")
+}
+
+tasks.register<JavaExec>("runWithoutUi") {
+    group = "application"
+    description = "Lance le programme sans interface"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("org.MainWithoutUI")
 }
 
 tasks.test {
