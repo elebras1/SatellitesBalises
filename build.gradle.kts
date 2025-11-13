@@ -25,11 +25,7 @@ application {
 tasks.generateGrammarSource {
     maxHeapSize = "64m"
     arguments = listOf("-visitor", "-listener")
-
-    source = fileTree("src/main/antlr") {
-        include("**/*.g4")
-    }
-    outputDirectory = file("build/org/antlr/generated")
+    outputDirectory = file("build/generated-src/antlr/main/org/antlr/generated")
 }
 
 tasks.test {

@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Simulation {
+public class Simulation implements World {
     private final SimulationContext context;
     private final NiSpace space;
     private final EventHandler eventHandler;
@@ -37,6 +37,21 @@ public class Simulation {
         this.satellites = new ArrayList<>();
         this.buoys = new ArrayList<>();
         this.initialize();
+    }
+
+    @Override
+    public SimulationContext getContext() {
+        return this.context;
+    }
+
+    @Override
+    public Buoy createBuoy(int width, int maxData, int x, int y, MovementStrategy movementStrategy) throws IOException {
+        return this.addBuoy(width, maxData, x, y, movementStrategy);
+    }
+
+    @Override
+    public Satellite createSatellite(int width, int x, int y, MovementStrategy movementStrategy) throws IOException {
+        return this.addSatellite(width, x, y, movementStrategy);
     }
 
     private void initialize() {
@@ -89,11 +104,13 @@ public class Simulation {
         SatelliteView satelliteView1 = new SatelliteView(new File("src/main/resources/satellite.png"));
         satelliteView1.setLocation(satellite.getPoint());
         this.space.add(satelliteView1);
+        this.space.setComponentZOrder(satelliteView1, 0);
         satellite.getEventHandler().registerListener(PositionChangedEvent.class, satelliteView1);
         satellite.getEventHandler().registerListener(StartSyncViewEvent.class, satelliteView1);
         satellite.getEventHandler().registerListener(EndSyncViewEvent.class, satelliteView1);
         satellite.setMovementStrategy(movementStrategy);
         this.satellites.add(satellite);
+        this.space.repaint();
         return satellite;
     }
 
@@ -104,11 +121,13 @@ public class Simulation {
         BuoyView buoyView1 = new BuoyView(new File("src/main/resources/submarine.png"));
         buoyView1.setLocation(buoy.getPoint());
         this.space.add(buoyView1);
+        this.space.setComponentZOrder(buoyView1, 0);
         buoy.getEventHandler().registerListener(PositionChangedEvent.class, buoyView1);
         buoy.getEventHandler().registerListener(StartSyncViewEvent.class, buoyView1);
         buoy.getEventHandler().registerListener(EndSyncViewEvent.class, buoyView1);
         buoy.setMovementStrategy(movementStrategy);
         this.buoys.add(buoy);
+        this.space.repaint();
         return buoy;
     }
 

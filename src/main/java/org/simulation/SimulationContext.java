@@ -1,6 +1,6 @@
 package org.simulation;
 
-public class SimulationContext {
+public class SimulationContext implements Context {
     private final int width;
     private final int height;
     private final int seaLevel;
