@@ -9,15 +9,18 @@ import org.model.Mobile;
 import org.model.Satellite;
 import org.strategy.MovementStrategy;
 import org.strategy.movement.*;
+import org.view.BuoyView;
+import org.view.SatelliteView;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SimulationInterfaceWithoutUI implements SimulationInterface {
+public class SimulationWithUI implements SimulationInterface {
     private final SimulationContext context;
     private final NiSpace space;
     private final EventHandler eventHandler;
@@ -26,7 +29,7 @@ public class SimulationInterfaceWithoutUI implements SimulationInterface {
     private List<Buoy> buoys;
 
 
-    public SimulationInterfaceWithoutUI(SimulationContext context) {
+    public SimulationWithUI(SimulationContext context) {
         this.context = context;
         this.space = new NiSpace("Simulation Space", new Dimension(context.getWidth(), context.getHeight()));
         this.eventHandler = new EventHandler();
@@ -52,15 +55,16 @@ public class SimulationInterfaceWithoutUI implements SimulationInterface {
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+        this.addSea();
     }
 
     private void registerSatellite(List<Satellite> satellites, List<Buoy> buoys) {
-        for (Satellite satellite : satellites) {
-            for (Buoy buoy : buoys) {
-                buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
-                buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
-            }
-        }
+         for (Satellite satellite : satellites) {
+             for (Buoy buoy : buoys) {
+                 buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
+                 buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
+             }
+         }
     }
 
     private void registersListBuoys(List<Buoy> buoys) {
@@ -82,6 +86,12 @@ public class SimulationInterfaceWithoutUI implements SimulationInterface {
         Satellite satellite = new Satellite(width);
         satellite.setPoint(new Point(x, y));
         this.movementStrategies.put(satellite, movementStrategy);
+        SatelliteView satelliteView1 = new SatelliteView(new File("src/main/resources/satellite.png"));
+        satelliteView1.setLocation(satellite.getPoint());
+        this.space.add(satelliteView1);
+        satellite.getEventHandler().registerListener(PositionChangedEvent.class, satelliteView1);
+        satellite.getEventHandler().registerListener(StartSyncViewEvent.class, satelliteView1);
+        satellite.getEventHandler().registerListener(EndSyncViewEvent.class, satelliteView1);
         satellite.setMovementStrategy(movementStrategy);
         this.satellites.add(satellite);
         return satellite;
@@ -89,7 +99,14 @@ public class SimulationInterfaceWithoutUI implements SimulationInterface {
 
     private Buoy addBuoy(int width, int maxData, int x, int y, MovementStrategy movementStrategy) throws IOException {
         Buoy buoy = new Buoy(width, maxData,new Point(x, y));
+        System.out.println(x  +","+y);
         this.movementStrategies.put(buoy, movementStrategy);
+        BuoyView buoyView1 = new BuoyView(new File("src/main/resources/submarine.png"));
+        buoyView1.setLocation(buoy.getPoint());
+        this.space.add(buoyView1);
+        buoy.getEventHandler().registerListener(PositionChangedEvent.class, buoyView1);
+        buoy.getEventHandler().registerListener(StartSyncViewEvent.class, buoyView1);
+        buoy.getEventHandler().registerListener(EndSyncViewEvent.class, buoyView1);
         buoy.setMovementStrategy(movementStrategy);
         this.buoys.add(buoy);
         return buoy;
@@ -104,6 +121,8 @@ public class SimulationInterfaceWithoutUI implements SimulationInterface {
     }
 
     public void process() {
+        this.space.openInWindow();
+
         while (true) {
             try {
                 Thread.sleep(10);

@@ -144,7 +144,6 @@ public class Buoy implements Mobile {
                 this.setDataCollected(0);
 
                 this.getEventHandler().send(new SyncEvent(this));
-                this.endSync(satellite);
 
                 scheduler.shutdown();
 
