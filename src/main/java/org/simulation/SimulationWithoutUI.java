@@ -10,7 +10,9 @@ import org.model.Satellite;
 import org.strategy.MovementStrategy;
 import org.strategy.movement.*;
 import org.view.BuoyView;
+import org.view.BuoyViewHeadless;
 import org.view.SatelliteView;
+import org.view.SatelliteViewHeadless;
 
 import java.awt.*;
 import java.io.File;
@@ -117,19 +119,20 @@ public class SimulationWithoutUI implements SimulationInterface, World {
             buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
             buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
         }
+        this.eventHandler.registerListener(MovementEvent.class, satellite);
     }
 
     private Satellite addSatellite(int width, int x, int y, MovementStrategy movementStrategy) throws IOException {
         Satellite satellite = new Satellite(width);
         satellite.setPoint(new Point(x, y));
         this.movementStrategies.put(satellite, movementStrategy);
-        SatelliteView satelliteView1 = new SatelliteView(new File("src/main/resources/satellite.png"));
-        /*satelliteView1.setLocation(satellite.getPoint());
+        SatelliteViewHeadless satelliteView1 = new SatelliteViewHeadless(new File("src/main/resources/satellite.png"));
+        satelliteView1.setLocation(satellite.getPoint());
         this.space.add(satelliteView1);
         satellite.getEventHandler().registerListener(PositionChangedEvent.class, satelliteView1);
         satellite.getEventHandler().registerListener(StartSyncViewEvent.class, satelliteView1);
         satellite.getEventHandler().registerListener(EndSyncViewEvent.class, satelliteView1);
-        satellite.setMovementStrategy(movementStrategy);*/
+        satellite.setMovementStrategy(movementStrategy);
         this.satellites.add(satellite);
         this.space.repaint();
         return satellite;
@@ -139,14 +142,14 @@ public class SimulationWithoutUI implements SimulationInterface, World {
         Buoy buoy = new Buoy(width, maxData,new Point(x, y));
         System.out.println(x  +","+y);
         this.movementStrategies.put(buoy, movementStrategy);
-        BuoyView buoyView1 = new BuoyView(new File("src/main/resources/submarine.png"));
-        /*buoyView1.setLocation(buoy.getPoint());
+        BuoyViewHeadless buoyView1 = new BuoyViewHeadless(new File("src/main/resources/submarine.png"));
+        buoyView1.setLocation(buoy.getPoint());
         this.space.add(buoyView1);
         this.space.setComponentZOrder(buoyView1, 0);
         buoy.getEventHandler().registerListener(PositionChangedEvent.class, buoyView1);
         buoy.getEventHandler().registerListener(StartSyncViewEvent.class, buoyView1);
         buoy.getEventHandler().registerListener(EndSyncViewEvent.class, buoyView1);
-        buoy.setMovementStrategy(movementStrategy);*/
+        buoy.setMovementStrategy(movementStrategy);
         this.buoys.add(buoy);
         this.space.repaint();
         return buoy;
