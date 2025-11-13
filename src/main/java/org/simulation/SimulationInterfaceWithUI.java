@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Simulation {
+public class SimulationInterfaceWithUI implements SimulationInterface {
     private final SimulationContext context;
     private final NiSpace space;
     private final EventHandler eventHandler;
@@ -29,7 +29,7 @@ public class Simulation {
     private List<Buoy> buoys;
 
 
-    public Simulation(SimulationContext context) {
+    public SimulationInterfaceWithUI(SimulationContext context) {
         this.context = context;
         this.space = new NiSpace("Simulation Space", new Dimension(context.getWidth(), context.getHeight()));
         this.eventHandler = new EventHandler();
@@ -133,17 +133,19 @@ public class Simulation {
         }
     }
 
+    @Override
     public void onDataCollectionComplete(Mobile mobile) {
         mobile.setMovementStrategy(new ToSurfaceMovement(this.context, 1));
     }
 
+    @Override
     public void onDataCollection(Mobile mobile) {
         mobile.setMovementStrategy(this.movementStrategies.get(mobile));
         ((Buoy)mobile).collectingData();
     }
 
-    public void dive(Mobile mobile) {
+    @Override
+    public void onEndSync(Mobile mobile) {
         mobile.setMovementStrategy(new DiveMovement((int) mobile.getStartDepth().getY(),1));
-        // mobile.setMovementStrategy(this.movementStrategies.get(mobile));
     }
 }

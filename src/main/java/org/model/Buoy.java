@@ -131,6 +131,7 @@ public class Buoy implements Mobile {
         if ((sourcePosition.x) >= (targetPosition.x - 20) && (sourcePosition.x) <= (targetPosition.x + 20)
                 && this.getDataCollected() != 0 && !this.isCollecting() && satellite.isSyncing() == false && this.isSyncing() == false) {
 
+            System.out.println("Started sync for Buoy at " + this.point);
             this.getEventHandler().send(new StartSyncViewEvent(this));
             this.startSyncingData();
             satellite.startSync();
@@ -157,5 +158,6 @@ public class Buoy implements Mobile {
         this.getEventHandler().send(new EndSyncViewEvent(this));
         this.stopSyncingData();
         this.getEventHandler().send(new DiveEvent(this));
+        System.out.println("End sync for Buoy at " + this.point);
     }
 }
