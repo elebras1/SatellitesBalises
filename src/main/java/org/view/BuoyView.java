@@ -22,6 +22,7 @@ public class BuoyView extends NiImage implements View {
         this.setLocation(point);
         if (ellipse != null) {
             this.ellipse.setLocation(new Point(point.x - 137,point.y - 137));
+            this.getParent().setComponentZOrder(ellipse, 0);
         }
     }
 
