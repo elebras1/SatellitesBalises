@@ -9,7 +9,7 @@ public class MainWithUI {
         // Créer le contexte de simulation
         SimulationContext context = new SimulationContext(800, 600, 300);
         SimulationWithUI simulation = new SimulationWithUI(context);
-        EditorCode editor = new EditorCode();
+        EditorCode editor = new EditorCode(simulation);
         Thread simulationThread = new Thread(simulation::process);
         simulationThread.setDaemon(false);
         simulationThread.start();

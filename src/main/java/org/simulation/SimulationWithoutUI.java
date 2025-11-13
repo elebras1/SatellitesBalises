@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SimulationWithoutUI implements SimulationInterface {
+public class SimulationWithoutUI implements SimulationInterface, World {
     private final SimulationContext context;
     private final NiSpace space;
     private final EventHandler eventHandler;
@@ -43,7 +43,6 @@ public class SimulationWithoutUI implements SimulationInterface {
             Buoy buoy3 = this.addBuoy(64, 2000, this.context.getWidth() / 2 + 100, this.context.getHeight() - 250, new SinusMovement(this.context, 1));
             Satellite satellite1 = this.addSatellite(64, this.context.getWidth() / 2, 150, new HorizontalMovementSatellite(this.context, 1));
             Satellite satellite2 = this.addSatellite(64, (this.context.getWidth()-30) / 2, 100, new HorizontalMovementSatellite(this.context, 1));
-
 
             this.registerSatellite(this.satellites, this.buoys);
             this.registersListBuoys(this.buoys);
