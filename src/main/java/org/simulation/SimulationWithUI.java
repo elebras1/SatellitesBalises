@@ -62,11 +62,17 @@ public class SimulationWithUI implements SimulationInterface, World {
             Satellite satellite1 = this.addSatellite(64, this.context.getWidth() / 2, 150, new HorizontalMovementSatellite(this.context, 1));
             Satellite satellite2 = this.addSatellite(64, (this.context.getWidth()-30) / 2, 100, new HorizontalMovementSatellite(this.context, 1));
 
+            this.registerSatelliteSignleBuoys(this.satellites, buoy1);
+            this.registerSatelliteSignleBuoys(this.satellites, buoy2);
+            this.registerSatelliteSignleBuoys(this.satellites, buoy3);
+            this.registerSatelliteToBuoySingle(this.buoys, satellite1);
+            this.registerSatelliteToBuoySingle(this.buoys, satellite2);
 
+            /*
             this.registerSatellite(this.satellites, this.buoys);
             this.registersListBuoys(this.buoys);
             this.registersListSatellites(this.satellites);
-
+            */
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -95,6 +101,25 @@ public class SimulationWithUI implements SimulationInterface, World {
         for(Mobile satellite : satellites) {
             this.eventHandler.registerListener(MovementEvent.class, satellite);
         }
+    }
+
+    private void registerSatelliteSignleBuoys(List<Satellite> satellites, Buoy buoy) {
+        for (Satellite satellite : satellites) {
+            buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
+            buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
+        }
+        this.eventHandler.registerListener(MovementEvent.class, buoy);
+        buoy.getEventHandler().registerListener(DataCollectionCompleteEvent.class, this);
+        buoy.getEventHandler().registerListener(DataCollectionEvent.class, this);
+        buoy.getEventHandler().registerListener(DiveEvent.class, this);
+    }
+
+    private void registerSatelliteToBuoySingle(List<Buoy> buoys, Satellite satellite) {
+        for (Buoy buoy : buoys) {
+            buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
+            buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
+        }
+        this.eventHandler.registerListener(MovementEvent.class, satellite);
     }
 
     private Satellite addSatellite(int width, int x, int y, MovementStrategy movementStrategy) throws IOException {
