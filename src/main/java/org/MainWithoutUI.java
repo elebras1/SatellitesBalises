@@ -9,7 +9,7 @@ public class MainWithoutUI {
         // Créer le contexte de simulation
         SimulationContext context = new SimulationContext(800, 600, 300);
         SimulationWithoutUI simulation = new SimulationWithoutUI(context);
-        EditorCode editor = new EditorCode();
+        EditorCode editor = new EditorCode(simulation);
         Thread simulationThread = new Thread(simulation::process);
         simulationThread.setDaemon(false);
         simulationThread.start();

@@ -1,14 +1,23 @@
 package org.simulation;
 
+import org.antlr.generated.BenglemscLexer;
+import org.antlr.generated.BenglemscParser;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.interpreter.BenglemscInterpreter;
+
 import java.awt.*;
 import java.awt.event.*;
 
 public class EditorCode extends Frame {
 
     private final TextArea codeArea;
+    private final World world;
 
-    public EditorCode() {
+    public EditorCode(World world) {
         super("Éditeur de Code - Simulation");
+        this.world = world;
         this.setSize(900, 700);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout(10, 10));
@@ -27,9 +36,16 @@ public class EditorCode extends Frame {
         this.add(titlePanel, BorderLayout.NORTH);
 
         this.codeArea = new TextArea();
-        this.codeArea.setFont(new Font("Consolas", Font.PLAIN, 14));
+        this.codeArea.setFont(new Font("Consolas", Font.PLAIN, 17));
         this.codeArea.setBackground(new Color(43, 43, 43));
         this.codeArea.setForeground(Color.WHITE);
+        this.codeArea.setText(String.join("\n",
+                "m1 := new HorizontalMovement(1);",
+                "m2 := new HorizontalMovementSatellite(1);",
+                "",
+                "b1 := new Buoy(64, 2000, 400, 500, m1);",
+                "s1 := new Satellite(64, 500, 150, m2);"
+        ));
 
         this.add(this.codeArea, BorderLayout.CENTER);
 
@@ -41,7 +57,7 @@ public class EditorCode extends Frame {
         buttonPanel.add(clearButton);
         this.add(buttonPanel, BorderLayout.SOUTH);
 
-        runButton.addActionListener(e -> runCode());
+        runButton.addActionListener(e -> this.runCode());
         clearButton.addActionListener(e -> this.codeArea.setText(""));
 
         this.addWindowListener(new WindowAdapter() {
@@ -56,6 +72,29 @@ public class EditorCode extends Frame {
 
     private void runCode() {
         String code = this.codeArea.getText().trim();
+
+        if (code.isEmpty()) {
+            return;
+        }
+
+        try {
+            CharStream input = CharStreams.fromString(code);
+            BenglemscLexer lexer = new BenglemscLexer(input);
+
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            BenglemscParser parser = new BenglemscParser(tokens);
+
+            BenglemscParser.ProgramContext tree = parser.program();
+
+            if (parser.getNumberOfSyntaxErrors() > 0) {
+                return;
+            }
+
+            BenglemscInterpreter interpreter = new BenglemscInterpreter(this.world);
+            interpreter.visit(tree);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

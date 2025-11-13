@@ -36,6 +36,21 @@ public class SimulationWithoutUI implements SimulationInterface, World {
         this.initialize();
     }
 
+    @Override
+    public SimulationContext getContext() {
+        return this.context;
+    }
+
+    @Override
+    public Buoy createBuoy(int width, int maxData, int x, int y, MovementStrategy movementStrategy) throws IOException {
+        return this.addBuoy(width, maxData, x, y, movementStrategy);
+    }
+
+    @Override
+    public Satellite createSatellite(int width, int x, int y, MovementStrategy movementStrategy) throws IOException {
+        return this.addSatellite(width, x, y, movementStrategy);
+    }
+
     private void initialize() {
         try {
             Buoy buoy1 = this.addBuoy(64, 800, this.context.getWidth() / 2, this.context.getHeight() - 150, new HorizontalMovement(this.context, 1));
