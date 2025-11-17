@@ -44,12 +44,17 @@ public class EditorCode extends Frame {
         this.codeArea.setText(String.join("\n",
                 "m1 := new HorizontalMovement(1);",
                 "m2 := new HorizontalMovementSatellite(1);",
+                "m3 := new SinusMovement(2);",
                 "",
                 "b1 := new Buoy(64, 2000, 400, 500, m1);",
+                "b2 := new Buoy(64, 3000, 300, 450, m3);",
                 "s1 := new Satellite(64, 500, 150, m2);",
+                "s2 := new Satellite(64, 550, 140, m2);",
                 "",
                 "b1.start();",
-                "s1.start();"
+                "b2.start();",
+                "s1.start();",
+                "s2.start();"
         ));
 
         this.add(this.codeArea, BorderLayout.CENTER);
