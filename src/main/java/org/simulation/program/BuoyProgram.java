@@ -17,7 +17,7 @@ import org.strategy.movement.ToSurfaceMovement;
 public class BuoyProgram implements Program {
     private final SimulationContext context;
     private final EventHandler eventHandler;
-    private final MovementStrategy movementStrategyOrigin;
+    private MovementStrategy movementStrategyOrigin;
     private final Buoy buoy;
 
     public BuoyProgram(Buoy buoy, SimulationContext context) {
@@ -39,6 +39,7 @@ public class BuoyProgram implements Program {
 
     @Override
     public void onDataCollectionComplete(Mobile mobile) {
+        this.movementStrategyOrigin = mobile.getMovementStrategy();
         mobile.setMovementStrategy(new ToSurfaceMovement(this.context, 1));
     }
 

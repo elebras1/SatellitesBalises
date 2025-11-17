@@ -1,5 +1,6 @@
 package org.simulation;
 
+import nicellipse.component.NiEllipse;
 import nicellipse.component.NiRectangle;
 import nicellipse.component.NiSpace;
 import org.event.*;
@@ -15,7 +16,6 @@ import org.view.SatelliteView;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -81,7 +81,7 @@ public class SimulationWithUI implements World {
         satellite.setPoint(new Point(x, y));
         SatelliteView satelliteView1 = new SatelliteView(new File("src/main/resources/satellite.png"));
         satelliteView1.setLocation(satellite.getPoint());
-        this.space.add(satelliteView1);
+        this.space.add(satelliteView1.getGraphicElement());
         satellite.getEventHandler().registerListener(PositionChangedEvent.class, satelliteView1);
         satellite.getEventHandler().registerListener(StartSyncViewEvent.class, satelliteView1);
         satellite.getEventHandler().registerListener(EndSyncViewEvent.class, satelliteView1);
@@ -94,8 +94,8 @@ public class SimulationWithUI implements World {
         Buoy buoy = new Buoy(width, maxData,new Point(x, y));
         BuoyView buoyView1 = new BuoyView(new File("src/main/resources/submarine.png"));
         buoyView1.setLocation(buoy.getPoint());
-        this.space.add(buoyView1);
-        this.space.setComponentZOrder(buoyView1, 0);
+        this.space.add(buoyView1.getGraphicElement());
+        this.space.setComponentZOrder(buoyView1.getGraphicElement(), 0);
         buoy.getEventHandler().registerListener(PositionChangedEvent.class, buoyView1);
         buoy.getEventHandler().registerListener(StartSyncViewEvent.class, buoyView1);
         buoy.getEventHandler().registerListener(EndSyncViewEvent.class, buoyView1);

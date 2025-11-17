@@ -117,8 +117,8 @@ public class Satellite implements Mobile {
     }
 
     public void startSync() {
-        this.startSyncingData();
         this.getEventHandler().send(new StartSyncViewEvent(this));
+        this.startSyncingData();
     }
 
     public void endSync() {

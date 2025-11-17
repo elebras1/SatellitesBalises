@@ -3,16 +3,31 @@ package org.view;
 import nicellipse.component.NiImage;
 import org.model.Mobile;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class SatelliteViewHeadless extends NiImage implements View {
+public class SatelliteViewHeadless extends JComponent implements View {
 
     int counter = 0;
 
     public SatelliteViewHeadless(File path) throws IOException {
-        super(path);
+
+    }
+
+    public SatelliteViewHeadless(JComponent graphicElement) {
+
+    }
+
+    @Override
+    public JComponent getGraphicElement() {
+        return null;
+    }
+
+    @Override
+    public void setGraphicElement(JComponent graphicElement) {
+
     }
 
     @Override

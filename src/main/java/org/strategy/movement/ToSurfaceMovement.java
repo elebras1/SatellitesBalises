@@ -24,7 +24,7 @@ public class ToSurfaceMovement implements MovementStrategy {
     @Override
     public void move(Mobile mobile) {
         Point point = mobile.getPoint();
-        if (point.y <= this.simulationContext.getSeaLevel()-20) {
+        if (point.y <= this.simulationContext.getSeaLevel() - mobile.getMobileWidth()/2) {
             mobile.getEventHandler().send(new WaitingEvent(mobile));
             speed = 0;
         }
