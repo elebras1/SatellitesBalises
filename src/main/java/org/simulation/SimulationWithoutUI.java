@@ -99,7 +99,7 @@ public class SimulationWithoutUI implements World {
     }
 
     public void process() {
-        this.space.openInWindow();
+        //this.space.openInWindow();
 
         while (true) {
             try {
