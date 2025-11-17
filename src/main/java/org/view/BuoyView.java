@@ -1,6 +1,7 @@
 package org.view;
 
 import nicellipse.component.NiImage;
+import nicellipse.component.NiSpace;
 import org.graphicasset.AntennaSignal;
 import org.model.Mobile;
 
@@ -33,13 +34,10 @@ public class BuoyView extends JComponent implements View {
 
     @Override
     public void setGraphicElement(JComponent graphicElement) {
-        if (this.graphicElement == null) {
-            this.graphicElement = graphicElement;
-            this.graphicElement.getParent().add(this.graphicElement);
-        }else {
-            this.graphicElement.getParent().remove(this.graphicElement);
-            this.graphicElement = graphicElement;
-        }
+        NiSpace parent = (NiSpace) this.graphicElement.getParent();
+        parent.remove(this.graphicElement);
+        this.graphicElement = graphicElement;
+        parent.add(this.graphicElement);
     }
 
     @Override
