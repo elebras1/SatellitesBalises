@@ -38,6 +38,10 @@ public class BenglemscInterpreter extends BenglemscBaseVisitor<Object> {
     public Object visitVarAssign(BenglemscParser.VarAssignContext ctx) {
         String varName = ctx.ID().getText();
         Object value = this.visit(ctx.expr());
+        if (this.variables.containsKey(varName)) {
+            throw new RuntimeException("Variable déja définie : " + varName);
+        }
+
         this.variables.put(varName, value);
         System.out.println("Variable '" + varName + "' assigned: " + value);
         return value;
