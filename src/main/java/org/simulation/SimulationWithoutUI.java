@@ -15,8 +15,8 @@ import org.view.SatelliteViewHeadless;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SimulationWithoutUI implements World {
     private final SimulationContext context;
@@ -26,7 +26,7 @@ public class SimulationWithoutUI implements World {
     public SimulationWithoutUI(SimulationContext context) {
         this.context = context;
         this.space = new NiSpace("Simulation Space", new Dimension(context.getWidth(), context.getHeight()));
-        this.programs = new ArrayList<>();
+        this.programs = new CopyOnWriteArrayList<>();
     }
 
     @Override
