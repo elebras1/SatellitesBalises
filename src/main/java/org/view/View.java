@@ -11,4 +11,5 @@ public interface View {
     void move(Point point);
     void startSync(Mobile mobile);
     void endSync();
+    void remove();
 }

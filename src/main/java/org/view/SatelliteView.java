@@ -66,4 +66,14 @@ public class SatelliteView extends JComponent implements View {
             syncSignal = null;
         }
     }
+
+    @Override
+    public void remove() {
+        NiSpace parent = (NiSpace) this.graphicElement.getParent();
+        parent.remove(this.graphicElement);
+        if (syncSignal != null) {
+            parent.remove(syncSignal);
+        }
+        parent.repaint();
+    }
 }

@@ -32,6 +32,7 @@ public class SatelliteViewHeadless extends JComponent implements View {
 
     @Override
     public void move(Point point) {
+        this.setLocation(point);
         if (counter % 300 == 0) {
             System.out.println("Satellite moved to: " + point);
         }
@@ -46,5 +47,10 @@ public class SatelliteViewHeadless extends JComponent implements View {
     @Override
     public void endSync() {
         System.out.println("Ending sync satellite to buoy at point: " + this.getLocation());
+    }
+
+    @Override
+    public void remove() {
+        System.out.println("Removing satellite to : " + this.getLocation());
     }
 }

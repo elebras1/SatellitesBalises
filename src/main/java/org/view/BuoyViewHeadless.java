@@ -32,6 +32,7 @@ public class BuoyViewHeadless extends JComponent implements View {
 
     @Override
     public void move(Point point) {
+        this.setLocation(point);
         if (counter % 300 == 0) {
             System.out.println("Buoy moved to point: " + point);
         }
@@ -46,5 +47,10 @@ public class BuoyViewHeadless extends JComponent implements View {
     @Override
     public void endSync() {
         System.out.println("Ending sync buoy to satellite at point: " + this.getLocation());
+    }
+
+    @Override
+    public void remove() {
+        System.out.println("Removing buoy to satellite at point: " + this.getLocation());
     }
 }
