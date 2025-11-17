@@ -60,23 +60,12 @@ public class SimulationWithUI implements SimulationInterface, World {
 
     private void initialize() {
         try {
-            Buoy buoy1 = this.addBuoy(64, 800, this.context.getWidth() / 2, this.context.getHeight() - 150, new HorizontalMovement(this.context, 1));
-            Buoy buoy2 = this.addBuoy(64, 4000, this.context.getWidth() / 2 - 100, this.context.getHeight() - 200, new HorizontalMovement(this.context, 2));
-            Buoy buoy3 = this.addBuoy(64, 2000, this.context.getWidth() / 2 + 100, this.context.getHeight() - 250, new SinusMovement(this.context, 1));
-            Satellite satellite1 = this.addSatellite(64, this.context.getWidth() / 2, 150, new HorizontalMovementSatellite(this.context, 1));
-            Satellite satellite2 = this.addSatellite(64, (this.context.getWidth()-30) / 2, 100, new HorizontalMovementSatellite(this.context, 1));
+            Buoy buoy1 = this.createBuoy(64, 800, this.context.getWidth() / 2, this.context.getHeight() - 150, new HorizontalMovement(this.context, 1));
+            Buoy buoy2 = this.createBuoy(64, 4000, this.context.getWidth() / 2 - 100, this.context.getHeight() - 200, new HorizontalMovement(this.context, 2));
+            Buoy buoy3 = this.createBuoy(64, 2000, this.context.getWidth() / 2 + 100, this.context.getHeight() - 250, new SinusMovement(this.context, 1));
+            Satellite satellite1 = this.createSatellite(64, this.context.getWidth() / 2, 150, new HorizontalMovementSatellite(this.context, 1));
+            Satellite satellite2 = this.createSatellite(64, (this.context.getWidth()-30) / 2, 100, new HorizontalMovementSatellite(this.context, 1));
 
-            this.registerSatelliteSignleBuoys(this.satellites, buoy1);
-            this.registerSatelliteSignleBuoys(this.satellites, buoy2);
-            this.registerSatelliteSignleBuoys(this.satellites, buoy3);
-            this.registerSatelliteToBuoySingle(this.buoys, satellite1);
-            this.registerSatelliteToBuoySingle(this.buoys, satellite2);
-
-            /*
-            this.registerSatellite(this.satellites, this.buoys);
-            this.registersListBuoys(this.buoys);
-            this.registersListSatellites(this.satellites);
-            */
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -130,7 +119,6 @@ public class SimulationWithUI implements SimulationInterface, World {
         buoy.getEventHandler().registerListener(EndSyncViewEvent.class, buoyView1);
         buoy.setMovementStrategy(movementStrategy);
         this.buoys.add(buoy);
-        this.space.repaint();
         return buoy;
     }
 

@@ -16,6 +16,7 @@ public class Satellite implements Mobile {
     private MovementStrategy movementStrategy;
     private int dataCollected;
     private boolean isSyncing = false;
+    private boolean isMoving = false;
 
 
     public Satellite(int width) {
@@ -30,6 +31,7 @@ public class Satellite implements Mobile {
 
     @Override
     public void move() {
+        if (!isMoving) return;
         this.movementStrategy.move(this);
         this.eventHandler.send(new PositionChangedEvent(this));
     }
@@ -87,6 +89,16 @@ public class Satellite implements Mobile {
     @Override
     public boolean isSyncing() {
         return this.isSyncing;
+    }
+
+    @Override
+    public void start() {
+        this.isMoving = true;
+    }
+
+    @Override
+    public void stop() {
+        this.isMoving = false;
     }
 
     public void startSync() {

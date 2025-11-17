@@ -21,8 +21,7 @@ public class Buoy implements Mobile {
     private boolean isSyncing = false;
     private final Random random;
     private final Point startDepth;
-
-
+    private boolean isMoving = false;
 
     public Buoy(int width, int maxData, Point startDepth) {
         this.startDepth = startDepth;
@@ -40,6 +39,7 @@ public class Buoy implements Mobile {
 
     @Override
     public void move() {
+        if (!this.isMoving) return;
         this.collectData();
         this.movementStrategy.move(this);
         this.eventHandler.send(new PositionChangedEvent(this));
@@ -107,6 +107,16 @@ public class Buoy implements Mobile {
     @Override
     public boolean isSyncing() {
         return this.isSyncing;
+    }
+
+    @Override
+    public void start() {
+        this.isMoving = true;
+    }
+
+    @Override
+    public void stop() {
+        this.isMoving = false;
     }
 
     private void collectData() {

@@ -30,4 +30,8 @@ public interface Mobile {
     void stopSyncingData();
 
     boolean isSyncing();
+
+    void start();
+
+    void stop();
 }
