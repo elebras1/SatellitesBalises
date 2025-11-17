@@ -1,7 +1,8 @@
 package org.simulation.program;
 
+import org.event.EndSyncEvent;
 import org.event.MovementEvent;
-import org.event.SyncEvent;
+import org.event.StartSyncEvent;
 import org.event.WaitingEvent;
 import org.eventHandler.AbstractEvent;
 import org.eventHandler.EventHandler;
@@ -60,6 +61,7 @@ public class BuoyProgram implements Program {
     @Override
     public void onNewSatellite(Satellite satellite) {
         this.registerListenerToModel(WaitingEvent.class, satellite);
-        this.registerListenerToModel(SyncEvent.class, satellite);
+        this.registerListenerToModel(StartSyncEvent.class, satellite);
+        this.registerListenerToModel(EndSyncEvent.class, satellite);
     }
 }
