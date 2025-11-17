@@ -61,16 +61,7 @@ public class SimulationWithoutUI implements SimulationInterface, World {
     }
 
     private void initialize() {
-        try {
-            Buoy buoy1 = this.createBuoy(64, 800, this.context.getWidth() / 2, this.context.getHeight() - 150, new HorizontalMovement(this.context, 1));
-            Buoy buoy2 = this.createBuoy(64, 4000, this.context.getWidth() / 2 - 100, this.context.getHeight() - 200, new HorizontalMovement(this.context, 2));
-            Buoy buoy3 = this.createBuoy(64, 2000, this.context.getWidth() / 2 + 100, this.context.getHeight() - 250, new SinusMovement(this.context, 1));
-            Satellite satellite1 = this.createSatellite(64, this.context.getWidth() / 2, 150, new HorizontalMovementSatellite(this.context, 1));
-            Satellite satellite2 = this.createSatellite(64, (this.context.getWidth()-30) / 2, 100, new HorizontalMovementSatellite(this.context, 1));
 
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
     }
 
     private void registerSatelliteSignleBuoys(List<Satellite> satellites, Buoy buoy) {
