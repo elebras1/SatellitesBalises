@@ -5,8 +5,6 @@ import org.model.Buoy;
 import org.model.Mobile;
 import org.model.Satellite;
 
-import java.awt.*;
-
 public class WaitingEvent extends AbstractEvent {
     public WaitingEvent(Object source) {
         super(source);
@@ -14,6 +12,9 @@ public class WaitingEvent extends AbstractEvent {
 
     @Override
     public void sendTo(Object target) {
-        ((Buoy) getSource()).startSync((Satellite) target);
+        boolean canSync = ((Mobile) getSource()).canSync(((Mobile) target));
+        if (canSync) {
+            ((Mobile) getSource()).onStartSync(((Mobile) target));
+        }
     }
 }

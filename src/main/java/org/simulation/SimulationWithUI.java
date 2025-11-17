@@ -47,7 +47,7 @@ public class SimulationWithUI implements SimulationInterface, World {
     @Override
     public Buoy createBuoy(int width, int maxData, int x, int y, MovementStrategy movementStrategy) throws IOException {
         Buoy buoy = this.addBuoy(width, maxData, x, y, movementStrategy);
-        this.registerSatelliteSignleBuoys(this.satellites, buoy);
+        this.registerSatelliteSingleBuoy(this.satellites, buoy);
         return buoy;
     }
 
@@ -62,10 +62,11 @@ public class SimulationWithUI implements SimulationInterface, World {
         this.addSea();
     }
 
-    private void registerSatelliteSignleBuoys(List<Satellite> satellites, Buoy buoy) {
+    private void registerSatelliteSingleBuoy(List<Satellite> satellites, Buoy buoy) {
         for (Satellite satellite : satellites) {
             buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
-            buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
+            buoy.getEventHandler().registerListener(StartSyncEvent.class, satellite);
+            buoy.getEventHandler().registerListener(EndSyncEvent.class, satellite);
         }
         this.eventHandler.registerListener(MovementEvent.class, buoy);
         buoy.getEventHandler().registerListener(DataCollectionCompleteEvent.class, this);
@@ -76,7 +77,8 @@ public class SimulationWithUI implements SimulationInterface, World {
     private void registerSatelliteToBuoySingle(List<Buoy> buoys, Satellite satellite) {
         for (Buoy buoy : buoys) {
             buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
-            buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
+            buoy.getEventHandler().registerListener(StartSyncEvent.class, satellite);
+            buoy.getEventHandler().registerListener(EndSyncEvent.class, satellite);
         }
         this.eventHandler.registerListener(MovementEvent.class, satellite);
     }

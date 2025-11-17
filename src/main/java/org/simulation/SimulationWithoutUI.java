@@ -1,6 +1,5 @@
 package org.simulation;
 
-import nicellipse.component.NiRectangle;
 import nicellipse.component.NiSpace;
 import org.event.*;
 import org.eventHandler.EventHandler;
@@ -9,9 +8,7 @@ import org.model.Mobile;
 import org.model.Satellite;
 import org.strategy.MovementStrategy;
 import org.strategy.movement.*;
-import org.view.BuoyView;
 import org.view.BuoyViewHeadless;
-import org.view.SatelliteView;
 import org.view.SatelliteViewHeadless;
 
 import java.awt.*;
@@ -67,7 +64,7 @@ public class SimulationWithoutUI implements SimulationInterface, World {
     private void registerSatelliteSignleBuoys(List<Satellite> satellites, Buoy buoy) {
         for (Satellite satellite : satellites) {
             buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
-            buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
+            buoy.getEventHandler().registerListener(EndSyncEvent.class, satellite);
         }
         this.eventHandler.registerListener(MovementEvent.class, buoy);
         buoy.getEventHandler().registerListener(DataCollectionCompleteEvent.class, this);
@@ -78,7 +75,7 @@ public class SimulationWithoutUI implements SimulationInterface, World {
     private void registerSatelliteToBuoySingle(List<Buoy> buoys, Satellite satellite) {
         for (Buoy buoy : buoys) {
             buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
-            buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
+            buoy.getEventHandler().registerListener(EndSyncEvent.class, satellite);
         }
         this.eventHandler.registerListener(MovementEvent.class, satellite);
     }
