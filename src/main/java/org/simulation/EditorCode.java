@@ -14,10 +14,12 @@ public class EditorCode extends Frame {
 
     private final TextArea codeArea;
     private final World world;
+    private final BenglemscInterpreter interpreter;
 
     public EditorCode(World world) {
         super("Éditeur de Code - Simulation");
         this.world = world;
+        this.interpreter = new BenglemscInterpreter(this.world);
         this.setSize(900, 700);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout(10, 10));
@@ -71,6 +73,7 @@ public class EditorCode extends Frame {
     }
 
     private void runCode() {
+        System.out.println("<UNK>diteur de code");
         String code = this.codeArea.getText().trim();
 
         if (code.isEmpty()) {
@@ -90,7 +93,6 @@ public class EditorCode extends Frame {
                 return;
             }
 
-            BenglemscInterpreter interpreter = new BenglemscInterpreter(this.world);
             interpreter.visit(tree);
         } catch (Exception e) {
             e.printStackTrace();
