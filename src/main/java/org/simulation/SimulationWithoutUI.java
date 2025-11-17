@@ -9,6 +9,7 @@ import org.simulation.program.Program;
 import org.simulation.program.SatelliteProgram;
 import org.strategy.MovementStrategy;
 import org.view.BuoyViewHeadless;
+import org.view.SatelliteView;
 import org.view.SatelliteViewHeadless;
 
 import java.awt.*;

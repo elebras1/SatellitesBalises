@@ -134,37 +134,50 @@ public class Buoy implements Mobile {
         this.eventHandler.send(new DataCollectionCompleteEvent(this));
     }
 
-    public void startSync(Satellite satellite) {
+    public boolean canSync(Mobile mobile) {
         Point sourcePosition = this.getPoint();
-        Point targetPosition = satellite.getPoint();
+        Point targetPosition = mobile.getPoint();
 
-        if ((sourcePosition.x) >= (targetPosition.x - 20) && (sourcePosition.x) <= (targetPosition.x + 20)
-                && this.getDataCollected() != 0 && !this.isCollecting() && satellite.isSyncing() == false && this.isSyncing() == false) {
+        return (sourcePosition.x) >= (targetPosition.x - 20) && (sourcePosition.x) <= (targetPosition.x + 20)
+                && this.getDataCollected() != 0 && !this.isCollecting() && mobile.isSyncing() == false && this.isSyncing() == false;
+    }
 
-            System.out.println("Started sync for Buoy at " + this.point);
-            this.getEventHandler().send(new StartSyncViewEvent(this));
-            this.startSyncingData();
-            satellite.startSync();
 
-            ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    @Override
+    public void onStartSync(Mobile mobile) {
+        this.startSync((Satellite) mobile);
+    }
 
-            scheduler.schedule(() -> {
-                //simulation du transfert terminé après 2 secondes
-                satellite.setDataCollected(satellite.getDataCollected() + this.getDataCollected());
-                this.setDataCollected(0);
+    @Override
+    public void onEndSync(Mobile mobile) {
+        this.endSync((Satellite) mobile);
+    }
 
-                this.getEventHandler().send(new SyncEvent(this));
+    public void startSync(Satellite satellite) {
 
-                scheduler.shutdown();
+        System.out.println("Started sync for Buoy at " + this.point);
+        this.getEventHandler().send(new StartSyncViewEvent(this));
+        this.startSyncingData();
+        satellite.startSync();
 
-            }, 2, TimeUnit.SECONDS); // attendre 2 secondes sans bloquer
+        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
-        }
+        scheduler.schedule(() -> {
+            //simulation du transfert terminé après 2 secondes
+            satellite.setDataCollected(satellite.getDataCollected() + this.getDataCollected());
+            this.setDataCollected(0);
+
+            this.getEventHandler().send(new EndSyncEvent(this));
+
+            scheduler.shutdown();
+
+        }, 2, TimeUnit.SECONDS); // attendre 2 secondes sans bloquer
     }
 
     public void endSync(Satellite satellite) {
         satellite.endSync();
         this.getEventHandler().send(new EndSyncViewEvent(this));
+        if (!this.isSyncing()) return;
         this.stopSyncingData();
         this.getEventHandler().send(new DiveEvent(this));
         System.out.println("End sync for Buoy at " + this.point);

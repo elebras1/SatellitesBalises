@@ -101,6 +101,21 @@ public class Satellite implements Mobile {
         this.isMoving = false;
     }
 
+    @Override
+    public void onStartSync(Mobile mobile) {
+        return;
+    }
+
+    @Override
+    public void onEndSync(Mobile mobile) {
+        return;
+    }
+
+    @Override
+    public boolean canSync(Mobile mobile) {
+        return false;
+    }
+
     public void startSync() {
         this.startSyncingData();
         this.getEventHandler().send(new StartSyncViewEvent(this));

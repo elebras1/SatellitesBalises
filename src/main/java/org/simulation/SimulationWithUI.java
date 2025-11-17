@@ -85,6 +85,7 @@ public class SimulationWithUI implements World {
         satellite.getEventHandler().registerListener(StartSyncViewEvent.class, satelliteView1);
         satellite.getEventHandler().registerListener(EndSyncViewEvent.class, satelliteView1);
         satellite.setMovementStrategy(movementStrategy);
+        this.space.repaint();
         return satellite;
     }
 
@@ -98,6 +99,7 @@ public class SimulationWithUI implements World {
         buoy.getEventHandler().registerListener(StartSyncViewEvent.class, buoyView1);
         buoy.getEventHandler().registerListener(EndSyncViewEvent.class, buoyView1);
         buoy.setMovementStrategy(movementStrategy);
+        this.space.repaint();
         return buoy;
     }
 

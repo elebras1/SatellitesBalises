@@ -23,6 +23,7 @@ public interface Mobile {
     int getDataCollected();
 
     void setDataCollected(int dataCollected);
+
     public Point getStartDepth();
 
     void startSyncingData();
@@ -34,4 +35,10 @@ public interface Mobile {
     void start();
 
     void stop();
+
+    void onStartSync(Mobile mobile);
+
+    void onEndSync(Mobile mobile);
+
+    boolean canSync(Mobile mobile);
 }

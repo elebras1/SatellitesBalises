@@ -47,6 +47,7 @@ public class EditorCode extends Frame {
                 "",
                 "b1 := new Buoy(64, 2000, 400, 500, m1);",
                 "s1 := new Satellite(64, 500, 150, m2);",
+                "",
                 "b1.start();",
                 "s1.start();"
         ));
