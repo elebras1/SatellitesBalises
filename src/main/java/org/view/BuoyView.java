@@ -30,7 +30,6 @@ public class BuoyView extends NiImage implements View {
         Point point = mobile.getPoint();
         ellipse = this.add(new AntennaSignal(new Point(point.x - 137,point.y - 137)).createSignal());
         this.getParent().add(ellipse);
-        this.getParent().repaint();
         this.getParent().setComponentZOrder(ellipse, 0);
     }
 
