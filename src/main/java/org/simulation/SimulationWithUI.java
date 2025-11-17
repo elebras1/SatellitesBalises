@@ -3,12 +3,12 @@ package org.simulation;
 import nicellipse.component.NiRectangle;
 import nicellipse.component.NiSpace;
 import org.event.*;
-import org.eventHandler.EventHandler;
 import org.model.Buoy;
-import org.model.Mobile;
 import org.model.Satellite;
+import org.simulation.program.BuoyProgram;
+import org.simulation.program.Program;
+import org.simulation.program.SatelliteProgram;
 import org.strategy.MovementStrategy;
-import org.strategy.movement.*;
 import org.view.BuoyView;
 import org.view.SatelliteView;
 
@@ -16,26 +16,18 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class SimulationWithUI implements SimulationInterface, World {
+public class SimulationWithUI implements World {
     private final SimulationContext context;
     private final NiSpace space;
-    private final EventHandler eventHandler;
-    private Map<Mobile, MovementStrategy> movementStrategies;
-    private List<Satellite> satellites;
-    private List<Buoy> buoys;
+    private final List<Program> programs;
 
 
     public SimulationWithUI(SimulationContext context) {
         this.context = context;
         this.space = new NiSpace("Simulation Space", new Dimension(context.getWidth(), context.getHeight()));
-        this.eventHandler = new EventHandler();
-        this.movementStrategies = new HashMap<>();
-        this.satellites = new ArrayList<>();
-        this.buoys = new ArrayList<>();
+        this.programs = new ArrayList<>();
         this.initialize();
     }
 
@@ -47,54 +39,45 @@ public class SimulationWithUI implements SimulationInterface, World {
     @Override
     public Buoy createBuoy(int width, int maxData, int x, int y, MovementStrategy movementStrategy) throws IOException {
         Buoy buoy = this.addBuoy(width, maxData, x, y, movementStrategy);
-        this.registerSatelliteSignleBuoys(this.satellites, buoy);
+        BuoyProgram program = new BuoyProgram(buoy, this.context);
+        this.programs.add(program);
+        this.registerNewBuoy(buoy, program);
         return buoy;
     }
 
     @Override
     public Satellite createSatellite(int width, int x, int y, MovementStrategy movementStrategy) throws IOException {
         Satellite satellite = this.addSatellite(width, x, y, movementStrategy);
-        this.registerSatelliteToBuoySingle(this.buoys, satellite);
+        SatelliteProgram program = new SatelliteProgram(satellite);
+        this.programs.add(program);
+        this.registerNewSatellite(satellite, program);
         return satellite;
     }
 
     private void initialize() {
-        try {
-            Buoy buoy1 = this.createBuoy(64, 800, this.context.getWidth() / 2, this.context.getHeight() - 150, new HorizontalMovement(this.context, 1));
-            Buoy buoy2 = this.createBuoy(64, 4000, this.context.getWidth() / 2 - 100, this.context.getHeight() - 200, new HorizontalMovement(this.context, 2));
-            Buoy buoy3 = this.createBuoy(64, 2000, this.context.getWidth() / 2 + 100, this.context.getHeight() - 250, new SinusMovement(this.context, 1));
-            Satellite satellite1 = this.createSatellite(64, this.context.getWidth() / 2, 150, new HorizontalMovementSatellite(this.context, 1));
-            Satellite satellite2 = this.createSatellite(64, (this.context.getWidth()-30) / 2, 100, new HorizontalMovementSatellite(this.context, 1));
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
         this.addSea();
     }
 
-    private void registerSatelliteSignleBuoys(List<Satellite> satellites, Buoy buoy) {
-        for (Satellite satellite : satellites) {
-            buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
-            buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
+    private void registerNewBuoy(Buoy buoy, BuoyProgram buoyProgram) {
+        for (Program program : this.programs) {
+            program.onNewBuoy(buoy);
         }
-        this.eventHandler.registerListener(MovementEvent.class, buoy);
-        buoy.getEventHandler().registerListener(DataCollectionCompleteEvent.class, this);
-        buoy.getEventHandler().registerListener(DataCollectionEvent.class, this);
-        buoy.getEventHandler().registerListener(DiveEvent.class, this);
+        buoyProgram.getEventHandler().registerListener(MovementEvent.class, buoy);
+        buoy.getEventHandler().registerListener(DataCollectionCompleteEvent.class, buoyProgram);
+        buoy.getEventHandler().registerListener(DataCollectionEvent.class, buoyProgram);
+        buoy.getEventHandler().registerListener(DiveEvent.class, buoyProgram);
     }
 
-    private void registerSatelliteToBuoySingle(List<Buoy> buoys, Satellite satellite) {
-        for (Buoy buoy : buoys) {
-            buoy.getEventHandler().registerListener(WaitingEvent.class, satellite);
-            buoy.getEventHandler().registerListener(SyncEvent.class, satellite);
+    private void registerNewSatellite(Satellite satellite, SatelliteProgram satelliteProgram) {
+        for (Program program : this.programs) {
+            program.onNewSatellite(satellite);
         }
-        this.eventHandler.registerListener(MovementEvent.class, satellite);
+        satelliteProgram.getEventHandler().registerListener(MovementEvent.class, satellite);
     }
 
     private Satellite addSatellite(int width, int x, int y, MovementStrategy movementStrategy) throws IOException {
         Satellite satellite = new Satellite(width);
         satellite.setPoint(new Point(x, y));
-        this.movementStrategies.put(satellite, movementStrategy);
         SatelliteView satelliteView1 = new SatelliteView(new File("src/main/resources/satellite.png"));
         satelliteView1.setLocation(satellite.getPoint());
         this.space.add(satelliteView1);
@@ -102,14 +85,11 @@ public class SimulationWithUI implements SimulationInterface, World {
         satellite.getEventHandler().registerListener(StartSyncViewEvent.class, satelliteView1);
         satellite.getEventHandler().registerListener(EndSyncViewEvent.class, satelliteView1);
         satellite.setMovementStrategy(movementStrategy);
-        this.satellites.add(satellite);
         return satellite;
     }
 
     private Buoy addBuoy(int width, int maxData, int x, int y, MovementStrategy movementStrategy) throws IOException {
         Buoy buoy = new Buoy(width, maxData,new Point(x, y));
-        System.out.println(x  +","+y);
-        this.movementStrategies.put(buoy, movementStrategy);
         BuoyView buoyView1 = new BuoyView(new File("src/main/resources/submarine.png"));
         buoyView1.setLocation(buoy.getPoint());
         this.space.add(buoyView1);
@@ -118,7 +98,6 @@ public class SimulationWithUI implements SimulationInterface, World {
         buoy.getEventHandler().registerListener(StartSyncViewEvent.class, buoyView1);
         buoy.getEventHandler().registerListener(EndSyncViewEvent.class, buoyView1);
         buoy.setMovementStrategy(movementStrategy);
-        this.buoys.add(buoy);
         return buoy;
     }
 
@@ -136,26 +115,12 @@ public class SimulationWithUI implements SimulationInterface, World {
         while (true) {
             try {
                 Thread.sleep(10);
-                this.eventHandler.send(new MovementEvent(this));
+                for(Program program : this.programs) {
+                    program.process();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    @Override
-    public void onDataCollectionComplete(Mobile mobile) {
-        mobile.setMovementStrategy(new ToSurfaceMovement(this.context, 1));
-    }
-
-    @Override
-    public void onDataCollection(Mobile mobile) {
-        mobile.setMovementStrategy(this.movementStrategies.get(mobile));
-        ((Buoy)mobile).collectingData();
-    }
-
-    @Override
-    public void onEndSync(Mobile mobile) {
-        mobile.setMovementStrategy(new DiveMovement((int) mobile.getStartDepth().getY(),1));
     }
 }

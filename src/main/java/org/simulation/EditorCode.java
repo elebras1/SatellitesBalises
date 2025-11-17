@@ -46,7 +46,9 @@ public class EditorCode extends Frame {
                 "m2 := new HorizontalMovementSatellite(1);",
                 "",
                 "b1 := new Buoy(64, 2000, 400, 500, m1);",
-                "s1 := new Satellite(64, 500, 150, m2);"
+                "s1 := new Satellite(64, 500, 150, m2);",
+                "b1.start();",
+                "s1.start();"
         ));
 
         this.add(this.codeArea, BorderLayout.CENTER);

@@ -3,7 +3,8 @@ package org.event;
 
 import org.eventHandler.AbstractEvent;
 import org.model.Mobile;
-import org.simulation.SimulationInterface;
+import org.simulation.program.BuoyProgram;
+import org.simulation.program.Program;
 
 public class DataCollectionEvent extends AbstractEvent {
     public DataCollectionEvent(Object source) {
@@ -12,6 +13,6 @@ public class DataCollectionEvent extends AbstractEvent {
 
     @Override
     public void sendTo(Object target) {
-        ((SimulationInterface) target).onDataCollection((Mobile) getSource());
+        ((Program) target).onDataCollection((Mobile) getSource());
     }
 }
