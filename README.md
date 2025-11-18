@@ -170,13 +170,13 @@ private void collectData() {
 public boolean canSync(Mobile mobile) {
     Point sourcePosition = this.getPoint();
     Point targetPosition = mobile.getPoint();
-    
-    return (sourcePosition.x) >= (targetPosition.x - 20) 
-        && (sourcePosition.x) <= (targetPosition.x + 20)
-        && this.getDataCollected() != 0 
-        && !this.isCollecting() 
-        && mobile.isSyncing() == false 
-        && this.isSyncing() == false;
+
+    return (sourcePosition.x) >= (targetPosition.x - 20)
+            && (sourcePosition.x) <= (targetPosition.x + 20)
+            && this.getDataCollected() != 0
+            && !this.isCollecting()
+            && mobile.isSyncing() == false
+            && this.isSyncing() == false;
 }
 ```
 
@@ -322,19 +322,9 @@ Fonctionnement identique à `BuoyView` :
 
 **Principe clé** : Le modèle ne connaît pas la vue.
 
-```
-┌─────────┐                    ┌──────────────┐
-│  Buoy   │───sends event────> │ EventHandler │
-└─────────┘                    └──────┬───────┘
-                                      │
-                         ┌────────────┴─────────────┐
-                         │                          │
-                    ┌────▼────┐              ┌─────▼──────┐
-                    │BuoyView │              │OtherListener│
-                    └─────────┘              └────────────┘
-```
+![Découplage Modèle-Vue](readMe_asset\model_view.png "Découplage Modèle-Vue")
 
- **Avantages** :
+**Avantages** :
 - Changement de vue sans modifier le modèle
 - Plusieurs vues pour le même modèle
 - Testabilité : simulation sans UI
@@ -471,11 +461,11 @@ buoy.setMovementStrategy(new HorizontalMovement(context, speed));
 
 ### 5.5 Avantages du pattern Stratégie
 
- **Extensibilité** : Ajout de nouvelles stratégies sans modifier `Mobile`  
- **Open/Closed Principle** : Ouvert à l'extension, fermé à la modification  
- **Testabilité** : Test unitaire isolé de chaque stratégie  
- **Flexibilité runtime** : Changement de comportement en cours d'exécution  
- **Élimination des conditionnelles** : Pas de `if/switch` dans `Mobile.move()`  
+**Extensibilité** : Ajout de nouvelles stratégies sans modifier `Mobile`  
+**Open/Closed Principle** : Ouvert à l'extension, fermé à la modification  
+**Testabilité** : Test unitaire isolé de chaque stratégie  
+**Flexibilité runtime** : Changement de comportement en cours d'exécution  
+**Élimination des conditionnelles** : Pas de `if/switch` dans `Mobile.move()`
 
 ---
 
@@ -613,11 +603,11 @@ buoy.getEventHandler().registerListener(EndSyncEvent.class, satellite);
 
 ### 6.6 Avantages du pattern Observateur
 
- **Découplage fort** : Émetteur et récepteurs indépendants  
- **Extensibilité** : Ajout de nouveaux listeners sans modifier le sujet  
- **Broadcast naturel** : Un événement → N récepteurs  
- **Réactivité** : Mises à jour automatiques et immédiates  
- **Traçabilité** : Flux d'événements explicite  
+**Découplage fort** : Émetteur et récepteurs indépendants  
+**Extensibilité** : Ajout de nouveaux listeners sans modifier le sujet  
+**Broadcast naturel** : Un événement → N récepteurs  
+**Réactivité** : Mises à jour automatiques et immédiates  
+**Traçabilité** : Flux d'événements explicite
 
 ---
 
@@ -743,10 +733,10 @@ public class SatelliteProgram implements Program {
 
 ### 7.4 Avantages du système Program
 
- **Séparation des préoccupations** : Logique métier ≠ orchestration  
- **Réutilisabilité** : Un programme par type d'entité  
- **Extensibilité** : Nouveaux programmes sans modifier le modèle  
- **Testabilité** : Test isolé de l'orchestration  
+**Séparation des préoccupations** : Logique métier ≠ orchestration  
+**Réutilisabilité** : Un programme par type d'entité  
+**Extensibilité** : Nouveaux programmes sans modifier le modèle  
+**Testabilité** : Test isolé de l'orchestration
 
 ---
 
@@ -754,330 +744,35 @@ public class SatelliteProgram implements Program {
 
 ### 8.1 Diagramme de classes - Modèle
 
-```
-┌─────────────────────────────────┐
-│      <<interface>>              │
-│         Mobile                  │
-├─────────────────────────────────┤
-│ + getEventHandler()             │
-│ + move()                        │
-│ + getPoint(): Point             │
-│ + setPoint(Point)               │
-│ + getMovementStrategy()         │
-│ + setMovementStrategy()         │
-│ + getDataCollected(): int       │
-│ + setDataCollected(int)         │
-│ + startSyncingData()            │
-│ + stopSyncingData()             │
-│ + isSyncing(): boolean          │
-│ + start()                       │
-│ + stop()                        │
-│ + canSync(Mobile): boolean      │
-│ + onStartSync(Mobile)           │
-│ + onEndSync(Mobile)             │
-└───────────┬─────────────────────┘
-            │
-            │ <<implements>>
-      ┌─────┴──────┐
-      │            │
-┌─────▼──────┐  ┌──▼────────────┐
-│    Buoy    │  │   Satellite   │
-├────────────┤  ├───────────────┤
-│ - width    │  │ - width       │
-│ - point    │  │ - point       │
-│ - maxData  │  │ - dataColl.   │
-│ - dataColl.│  │ - isSyncing   │
-│ - isColl.  │  │ - isMoving    │
-│ - isSyncing│  │               │
-│ - random   │  │               │
-│ - startD.  │  │               │
-│ - isMoving │  │               │
-├────────────┤  ├───────────────┤
-│ + collectD.│  │ + startSync() │
-│ + canSync()│  │ + endSync()   │
-│ + startSync│  │               │
-│ + endSync()│  │               │
-└────────────┘  └───────────────┘
-```
+![Schéma Mobile Satellite Buoy](readMe_asset\mobile_satellite_buoy.png "Diagramme de classes - Modèle")
 
 ### 8.2 Diagramme de classes - Stratégie
 
-```
-┌───────────────────────────────┐
-│    <<interface>>              │
-│    MovementStrategy           │
-├───────────────────────────────┤
-│ + move(Mobile): void          │
-└─────────────┬─────────────────┘
-              │
-              │ <<implements>>
-    ┌─────────┼─────────┬────────────┬──────────────┐
-    │         │         │            │              │
-┌───▼───┐ ┌──▼──────┐ ┌▼───────┐ ┌▼──────────┐ ┌▼─────────┐
-│Horiz. │ │Horiz.   │ │Sinus   │ │Dive       │ │ToSurface │
-│Move   │ │MoveSat  │ │Movement│ │Movement   │ │Movement  │
-├───────┤ ├─────────┤ ├────────┤ ├───────────┤ ├──────────┤
-│-contxt│ │-context │ │-context│ │-targetDep │ │-context  │
-│-speed │ │-speed   │ │-speed  │ │-speed     │ │-speed    │
-│       │ │         │ │-amplit.│ │           │ │          │
-│       │ │         │ │-freq   │ │           │ │          │
-└───────┘ └─────────┘ └────────┘ └───────────┘ └──────────┘
-```
+![MovementStrategy](readMe_asset\MovementStrategy.png "Diagramme de classes - Stratégie")
 
 ### 8.3 Diagramme de classes - Observateur
 
-```
-┌──────────────────┐         ┌──────────────────┐
-│  EventHandler    │         │  EventListener   │
-├──────────────────┤         │   (implicit)     │
-│ - listeners      │         ├──────────────────┤
-│   Map<Class,List>│         │ + onEvent(Event) │
-├──────────────────┤         └────────┬─────────┘
-│ + register()     │                  │
-│ + send(Event)    │                  │ <<implements>>
-└──────────────────┘        ┌─────────┼──────────┐
-         △                  │         │          │
-         │                  │         │          │
-         │           ┌──────▼───┐ ┌──▼─────┐ ┌──▼──────┐
-         │           │ BuoyView │ │Satellit│ │ Buoy    │
-┌────────┴────────┐  │          │ │eView   │ │Program  │
-│ AbstractEvent   │  └──────────┘ └────────┘ └─────────┘
-├─────────────────┤
-│ - source        │
-└─────────────────┘
-       △
-       │ <<extends>>
- ┌─────┼─────┬──────────┬────────────┬───────────┐
- │     │     │          │            │           │
-┌┴──┐ ┌┴───┐ ┌┴────┐ ┌──┴─────┐ ┌───┴────┐ ┌───┴────┐
-│Mov│ │Pos │ │Start│ │End     │ │Data    │ │Dive    │
-│emt│ │Chgd│ │Sync │ │Sync    │ │CollCpl │ │Event   │
-│Evt│ │Evt │ │View │ │View    │ │Event   │ │        │
-└───┘ └────┘ └─────┘ └────────┘ └────────┘ └────────┘
-```
+![EventHandler](readMe_asset\EventHandler.png "Diagramme de classes - Observateur")
 
 ### 8.4 Diagramme de classes - Program et World
 
-```
-┌───────────────────────────┐
-│    <<interface>>          │
-│       Program             │
-├───────────────────────────┤
-│ + getEventHandler()       │
-│ + registerListener()      │
-│ + onDataCollComplete()    │
-│ + onDataCollection()      │
-│ + onEndSync()             │
-│ + process()               │
-│ + onNewBuoy()             │
-│ + onNewSatellite()        │
-└───────────┬───────────────┘
-            │
-            │ <<implements>>
-      ┌─────┴──────┐
-      │            │
-┌─────▼──────┐  ┌──▼────────────┐
-│BuoyProgram │  │SatelliteProgram│
-├────────────┤  ├────────────────┤
-│ - context  │  │ - satellite    │
-│ - eventHdl │  │ - eventHandler │
-│ - stratOri │  │                │
-│ - buoy     │  │                │
-└────────────┘  └────────────────┘
-
-┌───────────────────────────┐
-│    <<interface>>          │
-│        World              │
-├───────────────────────────┤
-│ + getContext()            │
-│ + createBuoy()            │
-│ + createSatellite()       │
-└───────────┬───────────────┘
-            │
-            │ <<implements>>
-      ┌─────┴──────────┐
-      │                │
-┌─────▼────────┐  ┌────▼──────────┐
-│SimulationWith│  │SimulationWith │
-│UI            │  │outUI          │
-├──────────────┤  ├───────────────┤
-│ - context    │  │ - context     │
-│ - space      │  │ - space       │
-│ - programs   │  │ - programs    │
-└──────────────┘  └───────────────┘
-```
+![Program et World](readMe_asset\program_world.png "Diagramme de classes - Program et World")
 
 ### 8.5 Diagramme de séquence - Synchronisation complète
 
-```
-Buoy         BuoyProgram    EventHandler   Satellite    SatelliteView
- │                │              │              │              │
- │──move()────────│              │              │              │
- │ (sous l'eau)   │              │              │              │
- │                │              │              │              │
- │──collectData()->│              │              │              │
- │  (maxData)     │              │              │              │
- │                │              │              │              │
- │──DataCollectionCompleteEvent->│              │              │
- │                │<─────────────│              │              │
- │                │              │              │              │
- │<─setMovementStrategy──────────│              │              │
- │  (ToSurfaceMovement)          │              │              │
- │                │              │              │              │
- │──move()────────│              │              │              │
- │  (remontée)    │              │              │              │
- │                │              │              │              │
- │──canSync(sat)->│──────────────│────────────> │              │
- │  true          │              │              │              │
- │                │              │              │              │
- │──startSync()───│──────────────│─────────────>│              │
- │                │              │              │              │
- │──StartSyncViewEvent──────────>│──────────────│─────────────>│
- │                │              │              │   (highlight) │
- │                │              │              │              │
- │──satellite.startSync()────────│──────────────│─────────────>│
- │                │              │  StartSyncViewEvent          │
- │                │              │              │              │
- │  [Schedule 2s] │              │              │              │
- │                │              │              │              │
- │  [après 2s]    │              │              │              │
- │                │              │              │              │
- │──transfert─────│──────────────│─────────────>│              │
- │  données       │              │              │              │
- │                │              │              │              │
- │──EndSyncEvent──│──────────────│─────────────>│              │
- │                │              │              │              │
- │<─onEndSync()───│──────────────│              │              │
- │                │              │              │              │
- │──EndSyncViewEvent─────────────│──────────────│─────────────>│
- │                │              │              │    (reset)   │
- │                │              │              │              │
- │──DiveEvent─────│──────────────│              │              │
- │                │<─────────────│              │              │
- │<─setMovementStrategy──────────│              │              │
- │  (DiveMovement)│              │              │              │
- │                │              │              │              │
-```
+![Synchronisation complète](readMe_asset\sequence_diagram.png "Diagramme de séquence - Synchronisation complète")
 
 ### 8.6 Diagramme d'états - Cycle de vie d'une Bouée
 
-```
-                    ┌──────────────┐
-                    │  [Initial]   │
-                    └──────┬───────┘
-                           │
-                           │ start()
-                           ▼
-              ┌────────────────────────┐
-              │      SOUS_EAU          │
-              │  HorizontalMovement    │
-              │  (déplacement sous     │
-              │   l'eau horizontal)    │
-              │  isCollecting = true   │
-              │  isMoving = true       │
-              └───┬──────────────┬─────┘
-                  │              │
-    dataCollected │              │  
-    >= maxData    │              │  
-                  │              │
-                  ▼              │
-         ┌────────────────┐      │
-         │  REMONTÉE      │      │
-         │ ToSurfaceMove  │      │
-         │ (monte vers la │      │
-         │  surface)      │      │
-         │ isCollecting=F │      │
-         └───────┬────────┘      │
-                 │                │
-                 │ y <= seaLevel  │
-                 │ (surface       │
-                 │  atteinte)     │
-                 ▼                │
-         ┌────────────────┐      │
-         │ EN_SURFACE     │      │
-         │ ATTENTE_SYNC   │      │
-         │ (immobile)     │      │
-         └───────┬────────┘      │
-                 │                │
-                 │ canSync()      │
-                 │ && satellite   │
-                 │ à proximité    │
-                 ▼                │
-         ┌────────────────┐      │
-         │ SYNCHRONISATION│      │
-         │ (en surface)   │      │
-         │ isSyncing=true │      │
-         │ [durée: 2s]    │      │
-         └───────┬────────┘      │
-                 │                │
-                 │ EndSyncEvent   │
-                 ▼                │
-         ┌────────────────┐      │
-         │  PLONGÉE       │      │
-         │ DiveMovement   │      │
-         │ (descend vers  │      │
-         │  profondeur)   │      │
-         │ isSyncing=false│      │
-         └───────┬────────┘      │
-                 │                │
-                 │ y >= targetY   │
-                 │ (profondeur    │
-                 │  initiale)     │
-                 └────────────────┘
-                         │
-                         └─> retour SOUS_EAU
-```
+![Cycle de vie d'une Bouée](readMe_asset\life_cycle.png "Diagramme d'états - Cycle de vie d'une Bouée")
 
 ### 8.7 Diagramme de séquence - Boucle principale
 
-```
-SimulationWithUI  BuoyProgram  Buoy  MovementStrategy  BuoyView
-       │               │         │          │             │
-       │──process()────>│         │          │             │
-       │               │         │          │             │
-       │               │─MovementEvent────> │             │
-       │               │         │          │             │
-       │               │         │──move()──>│             │
-       │               │         │          │             │
-       │               │         │<─Point───│             │
-       │               │         │          │             │
-       │               │         │──setPoint()            │
-       │               │         │          │             │
-       │               │         │─PositionChangedEvent──>│
-       │               │         │          │             │
-       │               │         │          │    (updateUI)
-       │               │         │          │             │
-       │◄──sleep(10ms)─┘         │          │             │
-       │                         │          │             │
-       │──process()──────────────>          │             │
-       │                                    │             │
-       │       (boucle infinie)             │             │
-       │                                    │             │
-```
+![Boucle principale](readMe_asset\main_loop.png "Diagramme de séquence - Boucle principale")
 
 ### 8.8 Diagramme de séquence - Création dynamique d'entités (Interpreter)
 
-```
-EditorCode    BenglemscInterpreter    World    SimulationWithUI
-    │                  │                │             │
-    │──runCode()──────>│                │             │
-    │                  │                │             │
-    │                  │──visit(AST)───>│             │
-    │                  │                │             │
-    │                  │──createBuoy()──│────────────>│
-    │                  │                │             │
-    │                  │                │──addBuoy()──│
-    │                  │                │             │
-    │                  │                │──register───│
-    │                  │                │  Listeners  │
-    │                  │                │             │
-    │                  │<───Buoy────────│<────────────│
-    │                  │                │             │
-    │                  │──buoy.start()──│             │
-    │                  │                │             │
-    │<─────────────────│                │             │
-    │  (bouée active)  │                │             │
-```
+![Création dynamique d'entités (Interpreter)](readMe_asset\dynamic_entity.png "Diagramme de séquence - Création dynamique d'entités (Interpreter)")
 
 ---
 
@@ -1402,10 +1097,10 @@ public class EditorCode extends Frame {
 
 ### 10.5 Avantages de l'interpréteur
 
- **Flexibilité** : Création d'entités sans recompilation  
- **Expérimentation** : Test rapide de configurations  
- **Pédagogie** : Illustration de concepts de compilation  
- **Extensibilité** : Ajout facile de nouvelles commandes  
+**Flexibilité** : Création d'entités sans recompilation  
+**Expérimentation** : Test rapide de configurations  
+**Pédagogie** : Illustration de concepts de compilation  
+**Extensibilité** : Ajout facile de nouvelles commandes
 
 ---
 
@@ -1423,26 +1118,7 @@ public class EditorCode extends Frame {
 
 ### 11.2 Interactions entre patrons
 
-```
-        ┌──────────────┐
-        │  STRATÉGIE   │  ◄──── Changement dynamique
-        └───────┬──────┘        par Programme
-                │
-                ▼
-        ┌──────────────┐
-        │    MOBILE    │  ────> Émet événements
-        └───────┬──────┘
-                │
-                ▼
-        ┌──────────────┐
-        │ OBSERVATEUR  │  ────> Notifie Vues
-        └───────┬──────┘        et Programmes
-                │
-                ▼
-        ┌──────────────┐
-        │  PROGRAMME   │  ────> Orchestre
-        └──────────────┘        changements stratégie
-```
+![Interactions entre patrons](readMe_asset\strategy_paterne.png "Interactions entre patrons")
 
 ---
 
@@ -1450,16 +1126,19 @@ public class EditorCode extends Frame {
 
 ### 12.1 Points forts du projet
 
- **Architecture claire** : Séparation stricte modèle/vue/contrôle  
- **Extensibilité** : Ajout facile de nouvelles stratégies, événements, entités  
- **Testabilité** : Composants découplés et testables unitairement  
- **Flexibilité** : Comportements modifiables à l'exécution  
- **Pédagogie** : Illustration de multiples patrons de conception  
+**Architecture claire** : Séparation stricte modèle/vue/contrôle  
+**Extensibilité** : Ajout facile de nouvelles stratégies, événements, entités  
+**Testabilité** : Composants découplés et testables unitairement  
+**Flexibilité** : Comportements modifiables à l'exécution  
+**Pédagogie** : Illustration de multiples patrons de conception
 
 ### 12.2 Évolutions possibles
 
 **Fonctionnelles** :
 - Ajout de nouveaux types d'entités (drones, stations de base)
+- Implémentation de zones de collecte spécifiques
+- Gestion de la consommation d'énergie
+- Collisions entre entités
 
 **Techniques** :
 - Persistance des données collectées (base de données)
@@ -1467,9 +1146,15 @@ public class EditorCode extends Frame {
 - Tests unitaires et d'intégration
 - Logs structurés avec SLF4J
 
+**Interface** :
+- Panel de contrôle (pause, vitesse, création d'entités)
+- Statistiques en temps réel
+- Replay de simulation
+- Export de données (CSV, JSON)
+
 ---
 
 **Documentation technique du projet SatellitesBalises**  
 **Version** : 1.0  
 **Date** : Novembre 2025  
-**Auteur** : Christian Esteban NUNEZ GUAJARDO, Erwan LE BRAS, Sully MILLET
+**Auteur** : Documentation basée sur l'analyse du code source
