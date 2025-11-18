@@ -322,7 +322,7 @@ Fonctionnement identique à `BuoyView` :
 
 **Principe clé** : Le modèle ne connaît pas la vue.
 
-![Découplage Modèle-Vue](readMe_asset\model_view.png "Découplage Modèle-Vue")
+![Découplage Modèle-Vue](readMe_asset/model_view.png "Découplage Modèle-Vue")
 
 **Avantages** :
 - Changement de vue sans modifier le modèle
@@ -744,35 +744,35 @@ public class SatelliteProgram implements Program {
 
 ### 8.1 Diagramme de classes - Modèle
 
-![Schéma Mobile Satellite Buoy](readMe_asset\mobile_satellite_buoy.png "Diagramme de classes - Modèle")
+![Schéma Mobile Satellite Buoy](readMe_asset/mobile_satellite_buoy.png "Diagramme de classes - Modèle")
 
 ### 8.2 Diagramme de classes - Stratégie
 
-![MovementStrategy](readMe_asset\MovementStrategy.png "Diagramme de classes - Stratégie")
+![MovementStrategy](readMe_asset/MovementStrategy.png "Diagramme de classes - Stratégie")
 
 ### 8.3 Diagramme de classes - Observateur
 
-![EventHandler](readMe_asset\EventHandler.png "Diagramme de classes - Observateur")
+![EventHandler](readMe_asset/EventHandler.png "Diagramme de classes - Observateur")
 
 ### 8.4 Diagramme de classes - Program et World
 
-![Program et World](readMe_asset\program_world.png "Diagramme de classes - Program et World")
+![Program et World](readMe_asset/program_world.png "Diagramme de classes - Program et World")
 
 ### 8.5 Diagramme de séquence - Synchronisation complète
 
-![Synchronisation complète](readMe_asset\sequence_diagram.png "Diagramme de séquence - Synchronisation complète")
+![Synchronisation complète](readMe_asset/sequence_diagram.png "Diagramme de séquence - Synchronisation complète")
 
 ### 8.6 Diagramme d'états - Cycle de vie d'une Bouée
 
-![Cycle de vie d'une Bouée](readMe_asset\life_cycle.png "Diagramme d'états - Cycle de vie d'une Bouée")
+![Cycle de vie d'une Bouée](readMe_asset/life_cycle.png "Diagramme d'états - Cycle de vie d'une Bouée")
 
 ### 8.7 Diagramme de séquence - Boucle principale
 
-![Boucle principale](readMe_asset\main_loop.png "Diagramme de séquence - Boucle principale")
+![Boucle principale](readMe_asset/main_loop.png "Diagramme de séquence - Boucle principale")
 
 ### 8.8 Diagramme de séquence - Création dynamique d'entités (Interpreter)
 
-![Création dynamique d'entités (Interpreter)](readMe_asset\dynamic_entity.png "Diagramme de séquence - Création dynamique d'entités (Interpreter)")
+![Création dynamique d'entités (Interpreter)](readMe_asset/dynamic_entity.png "Diagramme de séquence - Création dynamique d'entités (Interpreter)")
 
 ---
 
@@ -1118,7 +1118,7 @@ public class EditorCode extends Frame {
 
 ### 11.2 Interactions entre patrons
 
-![Interactions entre patrons](readMe_asset\strategy_paterne.png "Interactions entre patrons")
+![Interactions entre patrons](readMe_asset/strategy_paterne.png "Interactions entre patrons")
 
 ---
 
